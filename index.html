@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorry's Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&family=Satisfy&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @font-face {
+            font-family: 'Saans';
+            src: local('Arial'), local('Helvetica');
+            font-weight: 300 700;
+        }
+
+        body {
+            font-family: 'Saans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+        }
+
+        .smooth-scroll {
+            scroll-behavior: smooth;
+        }
+
+        .mix-blend-exclusion {
+            mix-blend-mode: exclusion;
+        }
+
+        .line-art {
+            stroke: #1b1b1b;
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        .reveal-text {
+            display: block;
+            white-space: nowrap;
+            text-align: center;
+            width: 100%;
+        }
+
+        .reveal-text .letter-wrap {
+            display: inline-block;
+            overflow: hidden;
+            position: relative;
+            vertical-align: top;
+        }
+
+        .reveal-text .letter {
+            display: inline-block;
+            animation: revealLetter 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+            transform: translateY(100%);
+        }
+
+        @keyframes revealLetter {
+            from {
+                transform: translateY(100%);
+            }
+            to {
+                transform: translateY(0%);
+            }
+        }
+
+        .rotate-text {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+            vertical-align: top;
+        }
+
+        .rotate-text-inner {
+            display: block;
+            transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .rotate-text:hover .rotate-text-inner {
+            transform: translateY(-100%);
+        }
+
+        .rotate-text-inner > span {
+            display: block;
+            white-space: nowrap;
+            padding-top: 0.2em;
+            padding-bottom: 0.05em;
+        }
+
+        .rotate-text-inner > span:last-child {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+        }
+
+        .hero-text-reveal {
+            opacity: 0;
+            animation: fadeInUp 0.4s ease-out forwards;
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+
+        .project-text-reveal {
+            opacity: 0;
+            transform: translateY(8px);
+        }
+
+        .project-text-reveal.revealed {
+            animation: fadeInUp 0.4s ease-out forwards;
+        }
+
+        .mantra-line {
+            display: block;
+            white-space: normal;
+            word-break: normal;
+            hyphens: none;
+            opacity: 0;
+            line-height: 1.1;
+        }
+
+        .mantra-line .char {
+            display: inline;
+            opacity: 0;
+        }
+
+        .mantra-line.typing .char.show {
+            opacity: 1;
+        }
+
+        .mantra-line .word {
+            display: inline-block;
+        }
+
+        .mantra-line.typing {
+            opacity: 1;
+        }
+
+        #projects {
+            overflow: visible !important;
+        }
+
+        .project-title-reveal {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+            vertical-align: top;
+        }
+
+        .project-title-inner {
+            display: block;
+            transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .group:hover .project-title-inner {
+            transform: translateY(-100%);
+        }
+
+        .project-title-inner > span {
+            display: block;
+            white-space: nowrap;
+            padding-top: 0.2em;
+            padding-bottom: 0.05em;
+        }
+
+        .project-title-inner > span:last-child {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+        }
+
+        .project-title-reveal .letter-wrap {
+            display: inline-block;
+            overflow: hidden;
+            position: relative;
+            vertical-align: top;
+        }
+
+        .project-title-reveal .letter {
+            display: inline-block;
+            transform: translateY(100%);
+        }
+
+        .project-title-reveal .letter.animate {
+            animation: revealLetter 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+        }
+
+        .project-label-reveal {
+            opacity: 0;
+            transform: translateY(8px);
+        }
+
+        .project-label-reveal.animate {
+            animation: fadeInUp 0.4s ease-out forwards;
+        }
+
+        .project-section-label {
+            opacity: 0;
+        }
+
+        .project-section-label.animate {
+            animation: fadeInUp 0.4s ease-out forwards;
+        }
+
+        /* Hero image draw effect */
+        .hero-image-container {
+            clip-path: inset(0 100% 0 0);
+            animation: drawImage 2s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+        }
+
+        @keyframes drawImage {
+            from {
+                clip-path: inset(0 100% 0 0);
+            }
+            to {
+                clip-path: inset(0 0% 0 0);
+            }
+        }
+
+
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#fffae2',
+                        darkBlue: '#0d4eaf',
+                        darkText: '#1b1b1b',
+                        redAccent: '#cc2a2a',
+                        videoRed: '#b4392f',
+                    },
+                    fontSize: {
+                        'hero': '142px',
+                        'quote': '80px',
+                        'project': '32px',
+                        'label': '12px',
+                        'paragraph': '14px',
+                    }
+                }
+            }
+        }
+    </script>
+    <script>
+        // Split text into letters with staggered animation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate main title
+            const revealText = document.querySelector('.reveal-text');
+            if (revealText) {
+                const text = revealText.textContent;
+                revealText.innerHTML = '';
+
+                text.split('').forEach((char, index) => {
+                    const letterWrap = document.createElement('span');
+                    letterWrap.className = 'letter-wrap';
+
+                    const letter = document.createElement('span');
+                    letter.className = 'letter';
+                    letter.innerHTML = char === ' ' ? '&nbsp;' : char;
+
+                    const delay = index * 0.03;
+                    letter.style.animationDelay = `${delay}s`;
+
+                    letterWrap.appendChild(letter);
+                    revealText.appendChild(letterWrap);
+                });
+            }
+
+            // Mouse trail drawing effect - Reusable function
+            function setupTrailCanvas(canvasId, sectionId, color = '#cc2a2a') {
+                const canvas = document.getElementById(canvasId);
+                const section = document.getElementById(sectionId);
+
+                if (canvas && section && window.innerWidth >= 768) {
+                    const ctx = canvas.getContext('2d');
+                    const points = [];
+                    const trailPoints = [];
+                    const maxTrailLength = 30;
+                    let isDrawing = false;
+                    let mouseX = 0;
+                    let mouseY = 0;
+
+                    // Set canvas size
+                    function resizeCanvas() {
+                        canvas.width = section.offsetWidth;
+                        canvas.height = section.offsetHeight;
+                    }
+                    resizeCanvas();
+                    window.addEventListener('resize', resizeCanvas);
+
+                    // Mouse events
+                    section.addEventListener('mouseenter', () => {
+                        isDrawing = true;
+                    });
+
+                    section.addEventListener('mouseleave', () => {
+                        isDrawing = false;
+                        // Gradually fade out instead of instant clear
+                    });
+
+                    section.addEventListener('mousemove', (e) => {
+                        const rect = section.getBoundingClientRect();
+                        mouseX = e.clientX - rect.left;
+                        mouseY = e.clientY - rect.top;
+
+                        if (!isDrawing) {
+                            isDrawing = true;
+                        }
+                    });
+
+                    // Smooth interpolation function (spring-like easing)
+                    function lerp(start, end, factor) {
+                        return start + (end - start) * factor;
+                    }
+
+                    // Animation loop
+                    function animate() {
+                        // Clear canvas completely to avoid covering content
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                        if (isDrawing) {
+                            // Create smooth trailing effect with spring physics
+                            if (trailPoints.length === 0) {
+                                trailPoints.push({ x: mouseX, y: mouseY });
+                            } else {
+                                // Add current mouse position
+                                trailPoints.push({ x: mouseX, y: mouseY });
+
+                                // Smooth out points using interpolation
+                                for (let i = 0; i < trailPoints.length - 1; i++) {
+                                    const point = trailPoints[i];
+                                    const nextPoint = trailPoints[i + 1];
+
+                                    // Spring-like smoothing - slower movement for more organic feel
+                                    point.x = lerp(point.x, nextPoint.x, 0.3);
+                                    point.y = lerp(point.y, nextPoint.y, 0.3);
+                                }
+
+                                // Limit trail length
+                                if (trailPoints.length > maxTrailLength) {
+                                    trailPoints.shift();
+                                }
+                            }
+
+                            // Draw the trail with vivid, bold appearance
+                            if (trailPoints.length > 2) {
+                                ctx.beginPath();
+                                ctx.moveTo(trailPoints[0].x, trailPoints[0].y);
+
+                                // Draw smooth curve through all points
+                                for (let i = 1; i < trailPoints.length - 1; i++) {
+                                    const xc = (trailPoints[i].x + trailPoints[i + 1].x) / 2;
+                                    const yc = (trailPoints[i].y + trailPoints[i + 1].y) / 2;
+                                    ctx.quadraticCurveTo(trailPoints[i].x, trailPoints[i].y, xc, yc);
+                                }
+
+                                // Connect to the last point
+                                const lastPoint = trailPoints[trailPoints.length - 1];
+                                ctx.lineTo(lastPoint.x, lastPoint.y);
+
+                                // Bold, vivid line styling - thicker and fully opaque
+                                ctx.strokeStyle = color;
+                                ctx.globalAlpha = 1; // Fully opaque - no transparency
+                                ctx.lineWidth = 2.5; // Thicker line for more visibility
+                                ctx.lineCap = 'round';
+                                ctx.lineJoin = 'round';
+
+                                ctx.stroke();
+
+                                // Reset alpha
+                                ctx.globalAlpha = 1;
+                            }
+                        } else {
+                            // Gradually remove trail points when not drawing
+                            if (trailPoints.length > 0) {
+                                trailPoints.shift();
+                            }
+                        }
+
+                        requestAnimationFrame(animate);
+                    }
+                    animate();
+                }
+            }
+
+            // Setup full-page trail (covers all sections)
+            const fullPageCanvas = document.getElementById('fullPageTrailCanvas');
+
+            if (fullPageCanvas && window.innerWidth >= 768) {
+                const ctx = fullPageCanvas.getContext('2d');
+                const trailPoints = [];
+                const maxTrailLength = 40;
+                let isDrawing = false;
+                let mouseX = 0;
+                let mouseY = 0;
+                let velocity = 0;
+
+                // Set canvas size to viewport (since it's fixed position)
+                function resizeCanvas() {
+                    fullPageCanvas.width = window.innerWidth;
+                    fullPageCanvas.height = window.innerHeight;
+                }
+                resizeCanvas();
+                window.addEventListener('resize', resizeCanvas);
+
+                // Mouse events on document
+                document.addEventListener('mouseenter', () => {
+                    isDrawing = true;
+                });
+
+                document.addEventListener('mouseleave', () => {
+                    isDrawing = false;
+                });
+
+                let lastMouseX = 0;
+                let lastMouseY = 0;
+
+                document.addEventListener('mousemove', (e) => {
+                    // Check if mouse is over a no-trail element
+                    const target = e.target;
+                    const noTrailSection = target.closest('.no-trail');
+
+                    if (noTrailSection) {
+                        isDrawing = false;
+                        return;
+                    }
+
+                    // Check if mouse is over trail-enabled section (hero only)
+                    const trailEnabledSection = target.closest('.trail-enabled');
+
+                    if (!trailEnabledSection) {
+                        isDrawing = false;
+                        return;
+                    }
+
+                    // Calculate velocity for dynamic brush width
+                    const dx = e.clientX - lastMouseX;
+                    const dy = e.clientY - lastMouseY;
+                    velocity = Math.sqrt(dx * dx + dy * dy);
+
+                    lastMouseX = e.clientX;
+                    lastMouseY = e.clientY;
+
+                    // For fixed position canvas, use clientX/Y directly (no scroll offset needed)
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+
+                    if (!isDrawing) {
+                        isDrawing = true;
+                    }
+                });
+
+                // Smooth interpolation function
+                function lerp(start, end, factor) {
+                    return start + (end - start) * factor;
+                }
+
+                // Animation loop with brush effect
+                function animate() {
+                    ctx.clearRect(0, 0, fullPageCanvas.width, fullPageCanvas.height);
+
+                    if (isDrawing) {
+                        if (trailPoints.length === 0) {
+                            trailPoints.push({ x: mouseX, y: mouseY, velocity: velocity });
+                        } else {
+                            trailPoints.push({ x: mouseX, y: mouseY, velocity: velocity });
+
+                            for (let i = 0; i < trailPoints.length - 1; i++) {
+                                const point = trailPoints[i];
+                                const nextPoint = trailPoints[i + 1];
+                                point.x = lerp(point.x, nextPoint.x, 0.3);
+                                point.y = lerp(point.y, nextPoint.y, 0.3);
+                            }
+
+                            if (trailPoints.length > maxTrailLength) {
+                                trailPoints.shift();
+                            }
+                        }
+
+                        // Draw brush strokes with varying thickness
+                        if (trailPoints.length > 2) {
+                            for (let i = 0; i < trailPoints.length - 1; i++) {
+                                const point = trailPoints[i];
+                                const nextPoint = trailPoints[i + 1];
+
+                                // Calculate progress for fade effect
+                                const progress = i / trailPoints.length;
+
+                                // Dynamic brush width based on velocity and position
+                                const baseWidth = 8;
+                                const velocityFactor = Math.max(0.4, 1 - point.velocity / 30);
+                                const brushWidth = baseWidth * velocityFactor * (0.5 + progress * 0.5);
+
+                                // Add organic variation
+                                const noise = Math.sin(i * 0.5) * 0.4 + 1;
+                                const finalWidth = brushWidth * noise;
+
+                                // Draw segment with gradient opacity for brush feel
+                                ctx.beginPath();
+                                ctx.moveTo(point.x, point.y);
+                                ctx.lineTo(nextPoint.x, nextPoint.y);
+
+                                ctx.strokeStyle = '#cc2a2a';
+                                ctx.lineWidth = finalWidth;
+                                ctx.lineCap = 'round';
+                                ctx.lineJoin = 'round';
+                                ctx.globalAlpha = 0.85 * progress;
+
+                                ctx.stroke();
+                            }
+
+                            ctx.globalAlpha = 1;
+                        }
+                    } else {
+                        if (trailPoints.length > 0) {
+                            trailPoints.shift();
+                        }
+                    }
+
+                    requestAnimationFrame(animate);
+                }
+                animate();
+            }
+
+            // Background color change removed - keeping cream background throughout
+
+            // Smooth parallax for full-screen project images
+            const projectShowcaseContainers = document.querySelectorAll('section.w-full > div.relative.h-screen, section.w-full > div.h-screen > div.relative');
+
+            function updateParallax() {
+                const scrollY = window.scrollY;
+                const windowHeight = window.innerHeight;
+
+                // Parallax for full-screen project images
+                projectShowcaseContainers.forEach(container => {
+                    const rect = container.getBoundingClientRect();
+                    const containerTop = rect.top + scrollY;
+                    const containerHeight = rect.height;
+
+                    // Calculate when container is in viewport
+                    const inViewport = rect.top < windowHeight && rect.bottom > 0;
+
+                    if (inViewport) {
+                        // Calculate parallax offset - image moves slower than scroll
+                        const scrollProgress = (scrollY - containerTop + windowHeight) / (windowHeight + containerHeight);
+                        const parallaxOffset = scrollProgress * 150 - 75; // Range from -75px to 75px
+
+                        const img = container.querySelector('.project-image');
+                        if (img) {
+                            img.style.transform = `translateY(${parallaxOffset}px) scale(1.1)`;
+                        }
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updateParallax, { passive: true });
+            updateParallax(); // Initial call
+
+            // Old project text reveal code removed - now handled by new animation system
+
+            // Dramatic reveal animation for project showcase images
+            const projectShowcaseObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target.querySelector('.project-image');
+                        if (img) {
+                            // Trigger dezoom animation
+                            img.style.transform = 'scale(1.0)';
+                        }
+                    }
+                });
+            }, {
+                threshold: 0.3 // Trigger when 30% of the section is visible
+            });
+
+            // Observe each full-screen project container
+            document.querySelectorAll('.project-image').forEach(img => {
+                const container = img.parentElement;
+                if (container) {
+                    projectShowcaseObserver.observe(container);
+                }
+            });
+
+            // Typewriter animation for mantra lines
+            const mantraLines = document.querySelectorAll('.mantra-line');
+
+            // Split each mantra line into words, then characters
+            mantraLines.forEach((line) => {
+                const text = line.textContent;
+                line.innerHTML = '';
+
+                const words = text.split(' ');
+
+                words.forEach((word, wordIndex) => {
+                    // Create word wrapper to keep word together
+                    const wordSpan = document.createElement('span');
+                    wordSpan.className = 'word';
+
+                    // Split word into characters
+                    word.split('').forEach((char) => {
+                        const charSpan = document.createElement('span');
+                        charSpan.className = 'char';
+                        charSpan.textContent = char;
+                        wordSpan.appendChild(charSpan);
+                    });
+
+                    line.appendChild(wordSpan);
+
+                    // Add space after word (except last word)
+                    if (wordIndex < words.length - 1) {
+                        const spaceSpan = document.createElement('span');
+                        spaceSpan.className = 'char';
+                        spaceSpan.textContent = ' ';
+                        line.appendChild(spaceSpan);
+                    }
+                });
+            });
+
+            // Typewriter animation - one line at a time
+            let hasStartedMantraAnimation = false;
+
+            const mantraObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting && !hasStartedMantraAnimation) {
+                        hasStartedMantraAnimation = true;
+                        typeMantraLines(0);
+                    }
+                });
+            }, {
+                threshold: 0.3 // Trigger when 30% of the section is visible
+            });
+
+            function typeMantraLines(lineIndex) {
+                if (lineIndex >= mantraLines.length) return;
+
+                const line = mantraLines[lineIndex];
+                const chars = line.querySelectorAll('.char');
+
+                // Make line visible
+                line.classList.add('typing');
+
+                // Type each character with dynamic timing - much faster
+                chars.forEach((char, charIndex) => {
+                    // Random delay between 15-30ms for dynamic effect
+                    const baseDelay = charIndex * 20; // Faster base typing speed
+                    const randomVariation = Math.random() * 15; // Add variation
+                    const delay = baseDelay + randomVariation;
+
+                    setTimeout(() => {
+                        char.classList.add('show');
+                    }, delay);
+                });
+
+                // Calculate total line duration and start next line
+                const totalDuration = chars.length * 20 + 150; // Shorter pause between lines
+                setTimeout(() => {
+                    typeMantraLines(lineIndex + 1);
+                }, totalDuration);
+            }
+
+            // Observe the first mantra line to trigger the sequence
+            if (mantraLines.length > 0) {
+                mantraObserver.observe(mantraLines[0]);
+            }
+
+            // Split project titles into letters for reveal animation
+            const projectTitles = document.querySelectorAll('.project-title-reveal');
+
+            projectTitles.forEach((titleContainer, titleIndex) => {
+                const titleInner = titleContainer.querySelector('.project-title-inner');
+                const spans = titleInner.querySelectorAll('span');
+
+                const text = spans[0].textContent;
+
+                // Split both spans (first and duplicate)
+                spans.forEach(span => {
+                    span.innerHTML = '';
+
+                    text.split('').forEach((char, charIndex) => {
+                        const letterWrap = document.createElement('span');
+                        letterWrap.className = 'letter-wrap';
+
+                        const letter = document.createElement('span');
+                        letter.className = 'letter';
+                        letter.innerHTML = char === ' ' ? '&nbsp;' : char;
+
+                        const delay = (titleIndex * 0.15) + (charIndex * 0.02);
+                        letter.dataset.delay = delay;
+
+                        letterWrap.appendChild(letter);
+                        span.appendChild(letterWrap);
+                    });
+                });
+            });
+
+            // Observe projects section and trigger animations when visible
+            const projectsSection = document.getElementById('projects');
+            let hasProjectsAnimated = false;
+
+            const projectsAnimationObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting && !hasProjectsAnimated) {
+                        hasProjectsAnimated = true;
+
+                        // Animate section label first
+                        const sectionLabel = document.querySelector('.project-section-label');
+                        if (sectionLabel) {
+                            sectionLabel.classList.add('animate');
+                        }
+
+                        // Start title letter animations and corresponding labels at the same time
+                        projectTitles.forEach((title, titleIndex) => {
+                            // Calculate the base delay for this row
+                            const rowDelay = titleIndex * 0.15;
+
+                            const letters = title.querySelectorAll('.letter');
+                            letters.forEach(letter => {
+                                const delay = letter.dataset.delay;
+                                letter.style.animationDelay = `${delay}s`;
+                                letter.classList.add('animate');
+                            });
+
+                            // Animate labels for this project row at the same time as the title
+                            const projectRow = title.closest('.group');
+                            if (projectRow) {
+                                const rowLabels = projectRow.querySelectorAll('.project-label-reveal');
+                                rowLabels.forEach(label => {
+                                    // Use the same delay as the title's first letter but faster animation
+                                    label.style.animationDelay = `${rowDelay}s`;
+                                    label.style.animationDuration = '0.6s'; // Faster than title letters
+                                    label.classList.add('animate');
+                                });
+                            }
+                        });
+                    }
+                });
+            }, {
+                threshold: 0.2,
+                rootMargin: '-50px 0px'
+            });
+
+            if (projectsSection) {
+                projectsAnimationObserver.observe(projectsSection);
+            }
+
+
+        });
+    </script>
+</head>
+<body class="smooth-scroll text-darkText" style="background: #fffae2;">
+
+    <!-- Full Page Line Art Trail Canvas -->
+    <canvas id="fullPageTrailCanvas" class="fixed top-0 left-0 pointer-events-none hidden md:block" style="z-index: 9999;"></canvas>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen p-6 mb-32 md:mb-48 trail-enabled">
+        <!-- Top Menu CTAs -->
+        <div class="fixed top-6 right-6 flex flex-col gap-1 z-50 text-right">
+            <a href="#contact" class="text-label text-darkBlue uppercase tracking-wider font-medium rotate-text hero-text-reveal" style="animation-delay: 0.6s;">
+                <span class="rotate-text-inner">
+                    <span>diaslorry@gmail.com</span>
+                    <span>diaslorry@gmail.com</span>
+                </span>
+            </a>
+            <a href="#" class="text-label text-darkBlue uppercase tracking-wider font-medium rotate-text hero-text-reveal" style="animation-delay: 0.7s;">
+                <span class="rotate-text-inner">
+                    <span>download cv</span>
+                    <span>download cv</span>
+                </span>
+            </a>
+        </div>
+
+        <!-- Video Box -->
+        <div class="absolute top-6 left-6 w-[219px] h-[119px] bg-videoRed"></div>
+
+        <!-- Hero Title -->
+        <div class="absolute inset-0 flex items-center justify-center min-h-[600px] md:min-h-[800px] px-6">
+            <h1 class="reveal-text leading-none uppercase font-normal tracking-tight" style="font-size: 9.7vw;">Lorry'S portFOLIO</h1>
+        </div>
+
+        <!-- Bottom Text -->
+        <div class="absolute bottom-6 left-6 w-[279px] space-y-4">
+            <p class="text-label text-darkBlue uppercase tracking-wider font-medium hero-text-reveal" style="animation-delay: 0.9s;">
+                senior ux / ui designer
+            </p>
+            <div class="flex items-center justify-between text-label text-darkBlue uppercase tracking-wider font-medium hero-text-reveal" style="animation-delay: 1s;">
+                <span>&</span>
+                <span>digital art director</span>
+            </div>
+        </div>
+
+        <div class="absolute bottom-6 right-6 w-[219px] space-y-4">
+            <p class="text-label text-darkBlue uppercase tracking-wider font-medium text-right hero-text-reveal" style="animation-delay: 1.1s;">
+                working in switzerland
+            </p>
+            <p class="text-label text-darkBlue uppercase tracking-wider font-medium text-left hero-text-reveal" style="animation-delay: 1.2s;">
+                from brazil
+            </p>
+        </div>
+
+    </section>
+
+    <!-- Full Push Project Showcases -->
+    <section class="w-full no-trail">
+        <!-- Project 1 -->
+        <div class="relative h-screen w-full overflow-hidden flex items-end p-6 -mb-1">
+            <div class="absolute project-image" style="background: url('https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1920&h=1080&fit=crop') center/cover; top: -10%; left: -10%; width: 120%; height: 120%;"></div>
+            <div class="relative flex flex-col md:flex-row gap-4 items-start md:items-center">
+                <p class="text-label uppercase tracking-wider font-medium" style="color: #fff; mix-blend-mode: exclusion;">
+                    a fresh new website for urban Jürgensen
+                </p>
+                <a href="project-urban-jurgensen.html" class="text-label uppercase tracking-wider font-medium rotate-text" style="color: #fff; mix-blend-mode: exclusion;">
+                    <span class="rotate-text-inner">
+                        <span>view project</span>
+                        <span>view project</span>
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="relative h-screen w-full overflow-hidden flex items-end p-6 -mb-1">
+            <div class="absolute project-image" style="background: url('https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=1920&h=1080&fit=crop') center/cover; top: -10%; left: -10%; width: 120%; height: 120%;"></div>
+            <div class="relative flex flex-col md:flex-row gap-4 items-start md:items-center">
+                <p class="text-label uppercase tracking-wider font-medium" style="color: #fff; mix-blend-mode: exclusion;">
+                    patek philippe design system
+                </p>
+                <a href="project-patek-philippe.html" class="text-label uppercase tracking-wider font-medium rotate-text" style="color: #fff; mix-blend-mode: exclusion;">
+                    <span class="rotate-text-inner">
+                        <span>view project</span>
+                        <span>view project</span>
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="relative h-screen w-full overflow-hidden flex items-end p-6">
+            <div class="absolute project-image" style="background: url('https://images.unsplash.com/photo-1434056886845-dac89ffe9b56?w=1920&h=1080&fit=crop') center/cover; top: -10%; left: -10%; width: 120%; height: 120%;"></div>
+            <div class="relative flex flex-col md:flex-row gap-4 items-start md:items-center">
+                <p class="text-label uppercase tracking-wider font-medium" style="color: #fff; mix-blend-mode: exclusion;">
+                    a fresh new website for urban Jürgensen
+                </p>
+                <a href="project-template.html" class="text-label uppercase tracking-wider font-medium rotate-text" style="color: #fff; mix-blend-mode: exclusion;">
+                    <span class="rotate-text-inner">
+                        <span>view project</span>
+                        <span>view project</span>
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Split Section - Half and Half -->
+        <div class="flex flex-col md:flex-row w-full h-screen -mb-1">
+            <!-- Left Half -->
+            <div class="relative w-full md:w-1/2 h-1/2 md:h-full overflow-hidden flex items-end p-6">
+                <div class="absolute project-image" style="background: url('https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1920&h=1080&fit=crop') center/cover; top: -10%; left: -10%; width: 120%; height: 120%;"></div>
+                <div class="relative flex flex-col md:flex-row gap-4 items-start md:items-center">
+                    <p class="text-label uppercase tracking-wider font-medium" style="color: #fff; mix-blend-mode: exclusion;">
+                        patek philippe design system
+                    </p>
+                    <a href="project-template.html" class="text-label uppercase tracking-wider font-medium rotate-text" style="color: #fff; mix-blend-mode: exclusion;">
+                        <span class="rotate-text-inner">
+                            <span>view project</span>
+                            <span>view project</span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right Half -->
+            <div class="relative w-full md:w-1/2 h-1/2 md:h-full overflow-hidden flex items-end p-6">
+                <div class="absolute project-image" style="background: url('https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=1920&h=1080&fit=crop') center/cover; top: -10%; left: -10%; width: 120%; height: 120%;"></div>
+                <div class="relative flex flex-col md:flex-row gap-4 items-start md:items-center">
+                    <p class="text-label uppercase tracking-wider font-medium" style="color: #fff; mix-blend-mode: exclusion;">
+                        hine cognacs branding
+                    </p>
+                    <a href="project-template.html" class="text-label uppercase tracking-wider font-medium rotate-text" style="color: #fff; mix-blend-mode: exclusion;">
+                        <span class="rotate-text-inner">
+                            <span>view project</span>
+                            <span>view project</span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mantra Section -->
+    <section class="flex items-center justify-center px-6 md:px-[259px] py-[120px]" style="background: #fffae2;">
+        <div class="flex-1 text-center uppercase leading-none" style="font-size: 14px; color: #b4392f;">
+            <p style="font-family: 'Saans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-weight: 400; margin: 0;">ORDER</p>
+            <p style="font-family: 'Saans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-weight: 400; margin: 0;">BRINGS</p>
+            <p style="font-family: 'Saans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-weight: 400; margin: 0;">CALM</p>
+            <p style="font-family: 'Satisfy', cursive; font-weight: 400; margin: 0; text-transform: lowercase;">imperfection</p>
+            <p style="font-family: 'Saans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-weight: 400; margin: 0;">BRINGS</p>
+            <p style="font-family: 'Saans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-weight: 400; margin: 0;">WARMTH</p>
+        </div>
+    </section>
+
+
+</body>
+</html>
