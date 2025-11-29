@@ -240,6 +240,132 @@
             }
         }
 
+        /* ===== RESPONSIVE BREAKPOINTS ===== */
+
+        /* Mobile phones: 320px - 480px */
+        @media (max-width: 480px) {
+            /* Hero title - responsive font size */
+            .reveal-text {
+                font-size: 12vw !important;
+                line-height: 1.1;
+            }
+
+            /* Video box - smaller on mobile */
+            .fixed.top-6.left-6 > div {
+                width: 80px !important;
+                height: 44px !important;
+            }
+
+            /* Top menu - adjust spacing */
+            .fixed.top-6.right-6 {
+                top: 1rem;
+                right: 1rem;
+            }
+
+            /* Bottom text containers - full width on mobile */
+            .absolute.bottom-6.left-6,
+            .absolute.bottom-6.right-6 {
+                position: relative !important;
+                width: 100% !important;
+                bottom: auto !important;
+                left: auto !important;
+                right: auto !important;
+                padding: 0 1.5rem;
+                margin-bottom: 1rem;
+            }
+
+            /* Hero section - reduce height */
+            #home {
+                min-height: 100vh;
+                padding: 1.5rem;
+                margin-bottom: 3rem;
+            }
+
+            /* Hero title container - adjust for mobile */
+            .absolute.inset-0.flex.items-center.justify-center {
+                min-height: 60vh !important;
+                padding: 1rem;
+            }
+
+            /* Project showcase - reduce height on mobile */
+            .h-screen {
+                height: 70vh !important;
+            }
+
+            /* Project showcase text - better spacing */
+            .relative.flex.flex-col.gap-4 {
+                gap: 0.75rem !important;
+            }
+
+            /* Mantra section - reduce padding */
+            section.flex.items-center.justify-center {
+                padding: 3rem 1.5rem !important;
+            }
+
+            /* Mantra text - smaller font */
+            section.flex.items-center.justify-center div {
+                font-size: 10px !important;
+            }
+
+            /* Split section - stack vertically */
+            .flex.flex-col.md\\:flex-row.w-full.h-screen {
+                height: auto !important;
+            }
+
+            .flex.flex-col.md\\:flex-row.w-full.h-screen > div {
+                height: 50vh !important;
+            }
+        }
+
+        /* Tablets: 481px - 768px */
+        @media (min-width: 481px) and (max-width: 768px) {
+            /* Hero title - medium size */
+            .reveal-text {
+                font-size: 10vw !important;
+                line-height: 1.05;
+            }
+
+            /* Video box - medium size */
+            .fixed.top-6.left-6 > div {
+                width: 150px !important;
+                height: 82px !important;
+            }
+
+            /* Bottom text containers - adjusted width */
+            .absolute.bottom-6.left-6,
+            .absolute.bottom-6.right-6 {
+                width: 200px !important;
+            }
+
+            /* Hero section - adjust margins */
+            #home {
+                margin-bottom: 4rem;
+            }
+
+            /* Project showcase - slightly shorter */
+            .h-screen {
+                height: 80vh !important;
+            }
+
+            /* Mantra section - medium padding */
+            section.flex.items-center.justify-center {
+                padding: 4rem 3rem !important;
+            }
+
+            /* Mantra text - medium font */
+            section.flex.items-center.justify-center div {
+                font-size: 12px !important;
+            }
+        }
+
+        /* Desktop: 769px+ (default styles apply) */
+        @media (min-width: 769px) {
+            /* Ensure desktop styles are maintained */
+            .reveal-text {
+                font-size: 9.7vw;
+            }
+        }
+
 
     </style>
     <script>
@@ -259,6 +385,13 @@
                         'project': '32px',
                         'label': '12px',
                         'paragraph': '14px',
+                    },
+                    screens: {
+                        'xs': '320px',
+                        'sm': '481px',
+                        'md': '769px',
+                        'lg': '1024px',
+                        'xl': '1280px',
                     }
                 }
             }
@@ -832,7 +965,7 @@
                 <p class="text-label uppercase tracking-wider font-medium" style="color: #fff; mix-blend-mode: exclusion;">
                     a fresh new website for urban Jürgensen
                 </p>
-                <a href="project-urban-jurgensen.html" class="text-label uppercase tracking-wider font-medium rotate-text" style="color: #fff; mix-blend-mode: exclusion;">
+                <a href="project-template-v2.html" class="text-label uppercase tracking-wider font-medium rotate-text" style="color: #fff; mix-blend-mode: exclusion;">
                     <span class="rotate-text-inner">
                         <span>view project</span>
                         <span>view project</span>
@@ -848,7 +981,7 @@
                 <p class="text-label uppercase tracking-wider font-medium" style="color: #fff; mix-blend-mode: exclusion;">
                     patek philippe design system
                 </p>
-                <a href="project-patek-philippe.html" class="text-label uppercase tracking-wider font-medium rotate-text" style="color: #fff; mix-blend-mode: exclusion;">
+                <a href="project-template-v2.html" class="text-label uppercase tracking-wider font-medium rotate-text" style="color: #fff; mix-blend-mode: exclusion;">
                     <span class="rotate-text-inner">
                         <span>view project</span>
                         <span>view project</span>
@@ -864,7 +997,7 @@
                 <p class="text-label uppercase tracking-wider font-medium" style="color: #fff; mix-blend-mode: exclusion;">
                     a fresh new website for urban Jürgensen
                 </p>
-                <a href="project-template.html" class="text-label uppercase tracking-wider font-medium rotate-text" style="color: #fff; mix-blend-mode: exclusion;">
+                <a href="project-template-v2.html" class="text-label uppercase tracking-wider font-medium rotate-text" style="color: #fff; mix-blend-mode: exclusion;">
                     <span class="rotate-text-inner">
                         <span>view project</span>
                         <span>view project</span>
@@ -882,7 +1015,7 @@
                     <p class="text-label uppercase tracking-wider font-medium" style="color: #fff; mix-blend-mode: exclusion;">
                         patek philippe design system
                     </p>
-                    <a href="project-template.html" class="text-label uppercase tracking-wider font-medium rotate-text" style="color: #fff; mix-blend-mode: exclusion;">
+                    <a href="project-template-v2.html" class="text-label uppercase tracking-wider font-medium rotate-text" style="color: #fff; mix-blend-mode: exclusion;">
                         <span class="rotate-text-inner">
                             <span>view project</span>
                             <span>view project</span>
@@ -898,7 +1031,7 @@
                     <p class="text-label uppercase tracking-wider font-medium" style="color: #fff; mix-blend-mode: exclusion;">
                         hine cognacs branding
                     </p>
-                    <a href="project-template.html" class="text-label uppercase tracking-wider font-medium rotate-text" style="color: #fff; mix-blend-mode: exclusion;">
+                    <a href="project-template-v2.html" class="text-label uppercase tracking-wider font-medium rotate-text" style="color: #fff; mix-blend-mode: exclusion;">
                         <span class="rotate-text-inner">
                             <span>view project</span>
                             <span>view project</span>

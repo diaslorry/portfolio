@@ -409,6 +409,176 @@
             justify-content: space-between;
             align-items: center;
         }
+
+        /* ===== RESPONSIVE BREAKPOINTS ===== */
+
+        /* Mobile phones: 320px - 480px */
+        @media (max-width: 480px) {
+            /* Video box - smaller */
+            .video-box {
+                width: 80px;
+                height: 44px;
+                top: 16px;
+                left: 16px;
+            }
+
+            /* Top menu - adjust spacing */
+            .top-menu {
+                top: 16px;
+                right: 16px;
+                font-size: 10px;
+            }
+
+            .top-menu a {
+                font-size: 10px;
+            }
+
+            /* Page title - much smaller on mobile */
+            .page-title {
+                font-size: 48px;
+                margin: 80px 16px 0;
+                padding-bottom: 60px;
+            }
+
+            /* Main container - stack vertically */
+            .main-container {
+                flex-direction: column;
+                gap: 24px;
+                padding-left: 16px;
+            }
+
+            /* Left column - no longer sticky, full width */
+            .left-column {
+                position: relative;
+                width: 100%;
+                height: auto;
+                padding-right: 16px;
+                padding-bottom: 24px;
+            }
+
+            /* Right column - full width */
+            .right-column {
+                width: 100%;
+                padding-right: 16px;
+            }
+
+            /* Description text - smaller */
+            .description {
+                font-size: 13px;
+                text-align: left;
+            }
+
+            /* Subtitle lines - smaller */
+            .subtitle-line {
+                font-size: 11px;
+            }
+
+            /* Info lines - smaller */
+            .info-line {
+                font-size: 11px;
+            }
+
+            /* Full width section - shorter */
+            .full-width-section {
+                height: 50vh;
+            }
+
+            /* Other projects - stack vertically */
+            .other-projects {
+                flex-direction: column-reverse;
+                padding: 16px;
+                gap: 32px;
+            }
+
+            .other-projects-links {
+                width: 100%;
+                min-width: auto;
+                align-items: flex-start;
+            }
+
+            .other-projects-links a {
+                font-size: 32px;
+                margin-bottom: -5px;
+            }
+
+            .other-projects-media {
+                width: 100%;
+            }
+
+            .other-projects-image {
+                height: 200px;
+            }
+
+            .other-projects-labels .label-line {
+                font-size: 10px;
+            }
+        }
+
+        /* Tablets: 481px - 768px */
+        @media (min-width: 481px) and (max-width: 768px) {
+            /* Video box - medium size */
+            .video-box {
+                width: 150px;
+                height: 82px;
+            }
+
+            /* Page title - medium size */
+            .page-title {
+                font-size: 96px;
+                margin: 100px 24px 0;
+                padding-bottom: 100px;
+            }
+
+            /* Main container - stack vertically */
+            .main-container {
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            /* Left column - no longer sticky */
+            .left-column {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+
+            /* Right column - full width */
+            .right-column {
+                width: 100%;
+            }
+
+            /* Other projects - adjust layout */
+            .other-projects {
+                flex-direction: column-reverse;
+                gap: 48px;
+            }
+
+            .other-projects-links {
+                width: 100%;
+                min-width: auto;
+            }
+
+            .other-projects-links a {
+                font-size: 48px;
+            }
+
+            .other-projects-media {
+                width: 100%;
+            }
+        }
+
+        /* Desktop: 769px+ (default styles apply) */
+        @media (min-width: 769px) {
+            /* Ensure desktop layout is maintained */
+            .main-container {
+                flex-direction: row;
+            }
+
+            .left-column {
+                position: sticky;
+                width: 25%;
+            }
+        }
     </style>
 </head>
 <body>

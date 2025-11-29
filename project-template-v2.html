@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project - Patek Philippe</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @font-face {
+            font-family: 'Saans';
+            src: local('Arial'), local('Helvetica');
+            font-weight: 300 700;
+        }
+
+        body {
+            font-family: 'Saans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #fffef3;
+            color: #21222A;
+            overflow-x: hidden;
+        }
+
+        /* ===== FIXED HEADER ELEMENTS ===== */
+        .video-box {
+            position: fixed;
+            top: 24px;
+            left: 24px;
+            width: 101px;
+            height: 55px;
+            background: #cc2a2a;
+            z-index: 100;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+        }
+
+        .top-menu {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            align-items: flex-end;
+            z-index: 100;
+        }
+
+        .top-menu a {
+            font-size: 12px;
+            letter-spacing: 0.48px;
+            text-transform: uppercase;
+            color: #166dee;
+            text-decoration: none;
+        }
+
+        /* ===== MAIN CONTENT CONTAINER ===== */
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== LAUNCH LINK SECTION ===== */
+        .launch-section {
+            padding-top: 127px;
+            margin-bottom: 0;
+        }
+
+        .launch-link {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 28px;
+        }
+
+        .launch-link a {
+            font-size: 12px;
+            letter-spacing: 0.48px;
+            text-transform: uppercase;
+            color: #166dee;
+            text-decoration: none;
+        }
+
+        .launch-link svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* ===== INFO TABLE ===== */
+        .info-table {
+            border-top: 1px solid #E4E4E4;
+            border-bottom: 1px solid #E4E4E4;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding: 12px 0;
+            border-bottom: 1px solid #E4E4E4;
+            font-size: 12px;
+            letter-spacing: 0.48px;
+            text-transform: uppercase;
+            font-weight: 500;
+            color: #21222A;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        /* ===== PAGE TITLE ===== */
+        .page-title {
+            margin: 340px 0 0;
+        }
+
+        .page-title h1 {
+            font-size: 140px;
+            line-height: 0.9;
+            text-transform: uppercase;
+            color: rgba(238, 238, 238, 0.93);
+            mix-blend-mode: exclusion;
+            font-weight: 400;
+            margin: 0;
+        }
+
+        .page-title h2 {
+            font-size: 140px;
+            line-height: 0.9;
+            text-transform: uppercase;
+            color: rgba(238, 238, 238, 0.93);
+            mix-blend-mode: exclusion;
+            font-weight: 400;
+            text-align: right;
+            margin: 0;
+        }
+
+        /* ===== IMAGE GALLERY ===== */
+        .gallery {
+            position: relative;
+            margin-top: 276px;
+        }
+
+        .gallery-section {
+            position: relative;
+            margin-bottom: 0;
+        }
+
+        .gallery-image {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .gallery-image {
+            margin-bottom: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .gallery-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transform: scale(1.1);
+            transition: transform 0.1s ease-out;
+        }
+
+        /* Section 1: Small left + Large right on same row */
+        .section-1 {
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+            gap: 0;
+        }
+
+        .section-1 .gallery-image:first-child {
+            width: 26.11%; /* 376/1440 */
+            flex-shrink: 0;
+        }
+
+        .section-1 .gallery-image:last-child {
+            width: 73.89%; /* 1063/1440 */
+            flex-shrink: 0;
+        }
+
+        /* Section 2: Small right image - REMOVED, now part of section-1 */
+        .section-2 {
+            display: none;
+        }
+
+        /* Section 3: Full width image */
+        .section-3 {
+            margin-top: 0;
+            width: 100%;
+        }
+
+        .section-3 .gallery-image {
+            width: 100%;
+        }
+
+        /* Section 4: Large left + Small right on same row */
+        .section-4 {
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+            gap: 0;
+            margin-top: 0;
+        }
+
+        .section-4 .gallery-image:first-child {
+            width: 73.89%; /* 1064/1440 */
+            flex-shrink: 0;
+        }
+
+        .section-4 .gallery-image:last-child {
+            width: 26.11%; /* 376/1440 */
+            flex-shrink: 0;
+        }
+
+        /* Section 5: Small left image - REMOVED, now part of section-4 */
+        .section-5 {
+            display: none;
+        }
+
+        /* ===== PARAGRAPH SECTION ===== */
+        .paragraph-section {
+            margin-top: 200px;
+            margin-bottom: 290px;
+            clear: both;
+        }
+
+        .paragraph-section .container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .paragraph-section p {
+            width: 31.53%;
+            font-size: 14px;
+            line-height: 1.3;
+            text-align: justify;
+            letter-spacing: 0.14px;
+        }
+
+        /* ===== OTHER PROJECTS SECTION ===== */
+        .other-projects {
+            position: relative;
+            padding: 0 24px;
+            min-height: 1021px;
+        }
+
+        .whats-next {
+            text-align: center;
+            font-size: 12px;
+            letter-spacing: 0.48px;
+            text-transform: uppercase;
+            color: #166dee;
+            font-weight: 500;
+            margin-bottom: 38px;
+        }
+
+        .projects-layout {
+            position: relative;
+            min-height: 920px;
+        }
+
+        .projects-list {
+            position: relative;
+        }
+
+        .projects-list a {
+            display: block;
+            font-size: 136px;
+            line-height: 1;
+            text-transform: uppercase;
+            color: #1b1b1b;
+            text-decoration: none;
+            margin-bottom: -10px;
+        }
+
+        .projects-list a:nth-child(1) {
+            text-align: left;
+            padding-left: 235px;
+        }
+
+        .projects-list a:nth-child(2) {
+            text-align: left;
+        }
+
+        .projects-list a:nth-child(3) {
+            text-align: center;
+        }
+
+        .projects-list a:nth-child(4) {
+            text-align: left;
+        }
+
+        .projects-list a:nth-child(5) {
+            text-align: center;
+        }
+
+        .projects-list a:nth-child(6) {
+            text-align: left;
+            padding-left: 242px;
+        }
+
+        .projects-list a:nth-child(7) {
+            text-align: center;
+        }
+
+        .project-image {
+            position: absolute;
+            top: 130px;
+            right: 148px;
+            width: 339px;
+            height: 204px;
+            overflow: hidden;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 1024px) {
+            .page-title h1,
+            .page-title h2 {
+                font-size: 96px;
+            }
+
+            .projects-list a {
+                font-size: 80px;
+            }
+
+            .section-2,
+            .section-5 {
+                margin-top: 150px;
+            }
+
+            .section-3 {
+                margin-top: 200px;
+            }
+
+            .section-4 {
+                margin-top: 400px;
+            }
+
+            .paragraph-section {
+                margin-top: 300px;
+                margin-bottom: 200px;
+            }
+
+            .paragraph-section p {
+                width: 50%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .video-box {
+                width: 80px;
+                height: 44px;
+                top: 16px;
+                left: 16px;
+            }
+
+            .top-menu {
+                top: 16px;
+                right: 16px;
+            }
+
+            .top-menu a {
+                font-size: 10px;
+            }
+
+            .container {
+                padding: 0 16px;
+            }
+
+            .launch-section {
+                padding-top: 100px;
+            }
+
+            .page-title {
+                margin-top: 200px;
+            }
+
+            .page-title h1,
+            .page-title h2 {
+                font-size: 48px;
+            }
+
+            .gallery {
+                margin-top: 150px;
+            }
+
+            .section-1,
+            .section-4 {
+                flex-direction: column;
+            }
+
+            .section-1 .gallery-image,
+            .section-4 .gallery-image {
+                width: 100% !important;
+            }
+
+            .section-1 .gallery-image:last-child,
+            .section-4 .gallery-image:last-child {
+                margin-top: 50px;
+            }
+
+            .section-3,
+            .section-4 {
+                margin-top: 100px;
+            }
+
+            .paragraph-section {
+                margin-top: 150px;
+                margin-bottom: 150px;
+            }
+
+            .paragraph-section p {
+                width: 100%;
+            }
+
+            .projects-list a {
+                font-size: 40px;
+                padding-left: 0 !important;
+                text-align: left !important;
+            }
+
+            .project-image {
+                position: relative;
+                top: auto;
+                right: auto;
+                width: 100%;
+                margin-top: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-title h1,
+            .page-title h2 {
+                font-size: 36px;
+            }
+
+            .projects-list a {
+                font-size: 32px;
+            }
+
+            .info-row {
+                font-size: 10px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Video Box - Link to Homepage -->
+    <a href="index.html" class="video-box"></a>
+
+    <!-- Top Menu -->
+    <div class="top-menu">
+        <a href="index.html#contact">diaslorry@gmail.com</a>
+        <a href="#">download cv</a>
+    </div>
+
+    <!-- Launch Link & Info Table -->
+    <div class="container">
+        <div class="launch-section">
+            <div class="launch-link">
+                <a href="#">launch website</a>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M4 12L12 4M12 4H4M12 4V12" stroke="#166dee" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+
+            <div class="info-table">
+                <div class="info-row">
+                    <span>scope</span>
+                    <span>UX strategy, design system, full website redesign</span>
+                </div>
+                <div class="info-row">
+                    <span>role</span>
+                    <span>ux/ui design lead</span>
+                </div>
+                <div class="info-row">
+                    <span>launch year</span>
+                    <span>2025</span>
+                </div>
+                <div class="info-row">
+                    <span>project duration</span>
+                    <span>2 years</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page Title -->
+    <div class="container">
+        <div class="page-title">
+            <h1>patek philippe</h1>
+            <h2>design system</h2>
+        </div>
+    </div>
+
+    <!-- Image Gallery -->
+    <div class="gallery">
+        <!-- Section 1: Small left image + Large right image -->
+        <div class="gallery-section section-1">
+            <div class="gallery-image gallery-image-small">
+                <img src="https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?w=376&h=213&fit=crop" alt="Project image 1">
+            </div>
+            <div class="gallery-image gallery-image-large">
+                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1063&h=602&fit=crop" alt="Project image 2">
+            </div>
+        </div>
+
+        <!-- Section 3: Full width image -->
+        <div class="gallery-section section-3">
+            <div class="gallery-image gallery-image-full">
+                <img src="https://images.unsplash.com/photo-1594534475808-b18fc33b045e?w=1440&h=800&fit=crop" alt="Project image 3">
+            </div>
+        </div>
+
+        <!-- Section 4: Large left image + Small right image -->
+        <div class="gallery-section section-4">
+            <div class="gallery-image gallery-image-large">
+                <img src="https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=1064&h=598&fit=crop" alt="Project image 4">
+            </div>
+            <div class="gallery-image gallery-image-small">
+                <img src="https://images.unsplash.com/photo-1560343090-f0409e92791a?w=376&h=213&fit=crop" alt="Project image 5">
+            </div>
+        </div>
+    </div>
+
+    <!-- Paragraph -->
+    <div class="paragraph-section">
+        <div class="container">
+            <p>Lorem ipsum dolor sit amet consectetur. Felis nisl placerat amet dictum cras sed ornare. Amet mauris magna nec ullamcorper sit. Tellus sed pellentesque amet sollicitudin. Blandit at a condimentum cursus in amet rutrum aliquet. Ac nec id et a. Nunc phasellus at faucibus mi et aenean. Sit eget proin massa nunc viverra.</p>
+        </div>
+    </div>
+
+    <!-- Other Projects -->
+    <div class="other-projects">
+        <div class="whats-next">what's next</div>
+
+        <div class="projects-layout">
+            <div class="projects-list">
+                <a href="#" data-project="fpjourne">f.p.journe</a>
+                <a href="#" data-project="urban">urban jurgensen</a>
+                <a href="#" data-project="zodiac">zodiac</a>
+                <a href="#" data-project="parmigiani">parmigiani fleurier</a>
+                <a href="#" data-project="hine">hine</a>
+                <a href="#" data-project="legrand">le grand tour</a>
+                <a href="#" data-project="treasure">treasure island</a>
+            </div>
+
+            <div class="project-image">
+                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=339&h=204&fit=crop" alt="Project preview">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Parallax effect - exact copy from homepage
+        const imageContainers = document.querySelectorAll('.gallery-image-large, .gallery-image-full');
+
+        function updateParallax() {
+            const scrollY = window.scrollY;
+            const windowHeight = window.innerHeight;
+
+            imageContainers.forEach(container => {
+                const rect = container.getBoundingClientRect();
+                const containerTop = rect.top + scrollY;
+                const containerHeight = rect.height;
+
+                // Calculate when container is in viewport
+                const inViewport = rect.top < windowHeight && rect.bottom > 0;
+
+                if (inViewport) {
+                    // Calculate parallax offset - image moves slower than scroll
+                    const scrollProgress = (scrollY - containerTop + windowHeight) / (windowHeight + containerHeight);
+                    const parallaxOffset = scrollProgress * 150 - 75; // Range from -75px to 75px
+
+                    const img = container.querySelector('img');
+                    if (img) {
+                        img.style.transform = `translateY(${parallaxOffset}px) scale(1.1)`;
+                    }
+                }
+            });
+        }
+
+        function onScroll() {
+            updateParallax();
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        updateParallax(); // Initial call
+    </script>
+</body>
+</html>
