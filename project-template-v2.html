@@ -64,6 +64,14 @@
             padding: 0 24px;
         }
 
+        /* ===== HERO SECTION ===== */
+        .hero-section {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            min-height: 600px;
+        }
+
         /* ===== LAUNCH LINK SECTION ===== */
         .launch-section {
             padding-top: 127px;
@@ -115,7 +123,11 @@
 
         /* ===== PAGE TITLE ===== */
         .page-title {
-            margin: 340px 0 0;
+            position: absolute;
+            bottom: 24px;
+            left: 24px;
+            right: 24px;
+            margin: 0;
         }
 
         .page-title h1 {
@@ -386,8 +398,14 @@
                 padding-top: 100px;
             }
 
+            .hero-section {
+                min-height: 100vh;
+            }
+
             .page-title {
-                margin-top: 200px;
+                bottom: 24px;
+                left: 16px;
+                right: 16px;
             }
 
             .page-title h1,
@@ -472,39 +490,40 @@
         <a href="#">download cv</a>
     </div>
 
-    <!-- Launch Link & Info Table -->
-    <div class="container">
-        <div class="launch-section">
-            <div class="launch-link">
-                <a href="#">launch website</a>
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path d="M4 12L12 4M12 4H4M12 4V12" stroke="#166dee" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </div>
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <!-- Launch Link & Info Table -->
+        <div class="container">
+            <div class="launch-section">
+                <div class="launch-link">
+                    <a href="#">launch website</a>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M4 12L12 4M12 4H4M12 4V12" stroke="#166dee" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
 
-            <div class="info-table">
-                <div class="info-row">
-                    <span>scope</span>
-                    <span>UX strategy, design system, full website redesign</span>
-                </div>
-                <div class="info-row">
-                    <span>role</span>
-                    <span>ux/ui design lead</span>
-                </div>
-                <div class="info-row">
-                    <span>launch year</span>
-                    <span>2025</span>
-                </div>
-                <div class="info-row">
-                    <span>project duration</span>
-                    <span>2 years</span>
+                <div class="info-table">
+                    <div class="info-row">
+                        <span>scope</span>
+                        <span>UX strategy, design system, full website redesign</span>
+                    </div>
+                    <div class="info-row">
+                        <span>role</span>
+                        <span>ux/ui design lead</span>
+                    </div>
+                    <div class="info-row">
+                        <span>launch year</span>
+                        <span>2025</span>
+                    </div>
+                    <div class="info-row">
+                        <span>project duration</span>
+                        <span>2 years</span>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Page Title -->
-    <div class="container">
+        <!-- Page Title -->
         <div class="page-title">
             <h1>patek philippe</h1>
             <h2>design system</h2>
