@@ -491,7 +491,6 @@
 
         /* ===== OTHER PROJECTS SECTION ===== */
         .whats-next {
-            padding: 0 24px;
             font-size: 12px;
             letter-spacing: 0.48px;
             text-transform: uppercase;
@@ -499,12 +498,11 @@
             font-weight: 500;
             transition: opacity 0.3s ease;
             margin-bottom: 13.89vw; /* 200px at 1440px viewport (200/1440 = 13.89%) */
+            grid-column: 1 / 13;
         }
 
         .carousel-hover-label {
-            position: absolute;
-            top: 0;
-            right: 24px;
+            grid-column: 11 / 13; /* Last 2 columns */
             font-size: 12px;
             letter-spacing: 0.48px;
             text-transform: uppercase;
@@ -516,6 +514,8 @@
             pointer-events: none;
             white-space: nowrap;
             z-index: 50;
+            align-self: end;
+            margin-bottom: 24px; /* 24px above carousel */
         }
 
         .carousel-hover-label.visible {
@@ -703,10 +703,16 @@
             min-height: 100vh;
             margin-top: 80px;
             margin-bottom: 24px;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            column-gap: 16px;
+            padding: 0 24px;
         }
 
         .carousel-wrapper {
-            width: 100%;
+            grid-column: 1 / 13;
+            width: calc(100% + 48px); /* Account for carousel-section padding */
+            margin-left: -24px;
             overflow: hidden;
             background: #F5F6F5;
             padding: 24px 0 0 0;
