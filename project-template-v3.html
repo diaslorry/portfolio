@@ -19,7 +19,7 @@
 
         body {
             font-family: 'Saans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-            background: #fffef3;
+            background: #F5F6F5;
             color: #21222A;
             overflow-x: hidden;
         }
@@ -349,27 +349,75 @@
             transition: transform 0.1s ease-out;
         }
 
-        /* Section 1: Small left + Large right on same row */
+        /* Section 1: Background image + Centered portrait overlay */
         .section-1 {
-            display: flex;
-            align-items: flex-start;
+            position: relative;
             width: 100%;
-            gap: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .section-1 .gallery-image:first-child {
-            width: 26.11%; /* 376/1440 */
-            flex-shrink: 0;
+        .section-1 .gallery-image-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
         }
 
-        .section-1 .gallery-image:last-child {
-            width: 73.89%; /* 1063/1440 */
-            flex-shrink: 0;
+        .section-1 .gallery-image-background img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: none;
         }
 
-        /* Section 2: Small right image - REMOVED, now part of section-1 */
+        .section-1 .gallery-image-portrait {
+            position: relative;
+            width: 30%; /* Smaller centered portrait */
+            max-width: 432px;
+            aspect-ratio: 9/16;
+            z-index: 2;
+        }
+
+        .section-1 .gallery-image-portrait img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .section-1 .gallery-image-portrait img {
+            transform: scale(1);
+        }
+
+        /* Section 2: Two portrait images side by side */
         .section-2 {
-            display: none;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            column-gap: 16px;
+            margin-top: 120px;
+            margin-bottom: 120px;
+        }
+
+        .section-2 .gallery-image:first-child {
+            grid-column: 2 / 5; /* Columns 2-4 (3.5 columns with gap) */
+            aspect-ratio: 9/16;
+            margin-top: -40px; /* Offset for visual interest */
+        }
+
+        .section-2 .gallery-image:last-child {
+            grid-column: 5 / 8; /* Columns 5-7 (3.5 columns with gap) */
+            aspect-ratio: 9/16;
+            margin-top: 40px; /* Offset for visual interest */
+        }
+
+        .section-2 .gallery-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         /* Section 3: Full width image */
@@ -426,23 +474,52 @@
             letter-spacing: 0.14px;
         }
 
-        /* ===== OTHER PROJECTS SECTION ===== */
-        .other-projects {
+        /* ===== FULL VIEWPORT IMAGE ===== */
+        .full-viewport-image {
+            width: 100vw;
+            height: 100vh;
             position: relative;
-            padding: 0 24px;
-            min-height: 520px;
-            margin-top: 0;
-            padding-bottom: 40px;
+            overflow: hidden;
         }
 
+        .full-viewport-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* ===== OTHER PROJECTS SECTION ===== */
         .whats-next {
-            text-align: center;
+            padding: 0 24px;
             font-size: 12px;
             letter-spacing: 0.48px;
             text-transform: uppercase;
             color: #166dee;
             font-weight: 500;
-            margin-bottom: 38px;
+            transition: opacity 0.3s ease;
+            margin-bottom: 13.89vw; /* 200px at 1440px viewport (200/1440 = 13.89%) */
+        }
+
+        .carousel-hover-label {
+            position: absolute;
+            top: 0;
+            right: 24px;
+            font-size: 12px;
+            letter-spacing: 0.48px;
+            text-transform: uppercase;
+            color: #21222A;
+            font-weight: 400;
+            text-align: right;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            white-space: nowrap;
+            z-index: 50;
+        }
+
+        .carousel-hover-label.visible {
+            opacity: 1;
         }
 
         .projects-layout {
@@ -539,7 +616,7 @@
             background: #ac3221;
             height: 752px;
             position: relative;
-            margin-top: 80px;
+            margin-top: 24px;
         }
 
         .footer-contact-text {
@@ -621,11 +698,18 @@
         }
 
         /* ===== BOTTOM CAROUSEL ===== */
+        .carousel-section {
+            position: relative;
+            min-height: 100vh;
+            margin-top: 80px;
+            margin-bottom: 24px;
+        }
+
         .carousel-wrapper {
             width: 100%;
             overflow: hidden;
-            background: #fffef3;
-            padding: 40px 0;
+            background: #F5F6F5;
+            padding: 24px 0 0 0;
             position: relative;
         }
 
@@ -644,6 +728,15 @@
             position: relative;
             overflow: hidden;
             cursor: pointer;
+        }
+
+        .carousel-item-inner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
         }
 
         .carousel-item img {
@@ -926,32 +1019,26 @@
 
     <!-- Image Gallery -->
     <div class="gallery">
-        <!-- Section 1: Small left image + Large right image -->
+        <!-- Section 1: Background image + Centered portrait -->
         <div class="gallery-section section-1">
-            <div class="gallery-image gallery-image-small">
-                <img src="https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?w=376&h=213&fit=crop" alt="Project image 1">
+            <div class="gallery-image-background">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1440&h=900&fit=crop" alt="Background image">
             </div>
-            <div class="gallery-image gallery-image-large">
-                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1063&h=602&fit=crop" alt="Project image 2">
-            </div>
-        </div>
-
-        <!-- Section 3: Full width image -->
-        <div class="gallery-section section-3">
-            <div class="gallery-image gallery-image-full">
-                <img src="https://images.unsplash.com/photo-1594534475808-b18fc33b045e?w=1440&h=800&fit=crop" alt="Project image 3">
+            <div class="gallery-image-portrait">
+                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=432&h=768&fit=crop" alt="Project image 1">
             </div>
         </div>
 
-        <!-- Section 4: Large left image + Small right image -->
-        <div class="gallery-section section-4">
-            <div class="gallery-image gallery-image-large">
-                <img src="https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=1064&h=598&fit=crop" alt="Project image 4">
+        <!-- Section 2: Two portrait images -->
+        <div class="gallery-section section-2">
+            <div class="gallery-image">
+                <img src="https://images.unsplash.com/photo-1594534475808-b18fc33b045e?w=600&h=1067&fit=crop" alt="Project image 2">
             </div>
-            <div class="gallery-image gallery-image-small">
-                <img src="https://images.unsplash.com/photo-1560343090-f0409e92791a?w=376&h=213&fit=crop" alt="Project image 5">
+            <div class="gallery-image">
+                <img src="https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=600&h=1067&fit=crop" alt="Project image 3">
             </div>
         </div>
+
     </div>
 
     <!-- Paragraph -->
@@ -961,171 +1048,164 @@
         </div>
     </div>
 
-    <!-- Other Projects -->
-    <div class="other-projects">
-        <div class="whats-next">what's next</div>
-
-        <div class="projects-layout">
-            <div class="projects-list">
-                <a href="#" data-carousel-index="0">
-                    <span class="rotate-text-inner">
-                        <span>f.p.journe</span>
-                        <span>f.p.journe</span>
-                    </span>
-                </a>
-                <a href="#" data-carousel-index="1">
-                    <span class="rotate-text-inner">
-                        <span>urban jurgensen</span>
-                        <span>urban jurgensen</span>
-                    </span>
-                </a>
-                <a href="#" data-carousel-index="2">
-                    <span class="rotate-text-inner">
-                        <span>zodiac</span>
-                        <span>zodiac</span>
-                    </span>
-                </a>
-                <a href="#" data-carousel-index="3">
-                    <span class="rotate-text-inner">
-                        <span>parmigiani fleurier</span>
-                        <span>parmigiani fleurier</span>
-                    </span>
-                </a>
-                <a href="#" data-carousel-index="4">
-                    <span class="rotate-text-inner">
-                        <span>hine</span>
-                        <span>hine</span>
-                    </span>
-                </a>
-                <a href="#" data-carousel-index="5">
-                    <span class="rotate-text-inner">
-                        <span>le grand tour</span>
-                        <span>le grand tour</span>
-                    </span>
-                </a>
-                <a href="#" data-carousel-index="0">
-                    <span class="rotate-text-inner">
-                        <span>treasure island</span>
-                        <span>treasure island</span>
-                    </span>
-                </a>
-            </div>
-        </div>
+    <!-- Full Viewport Image -->
+    <div class="full-viewport-image">
+        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&h=900&fit=crop" alt="Full viewport image">
     </div>
 
     <!-- Bottom Carousel -->
-    <div class="carousel-wrapper">
-        <div class="carousel-container" id="carouselContainer">
+    <div class="carousel-section">
+        <div class="whats-next">what's next</div>
+        <div class="carousel-hover-label" id="carouselHoverLabel"></div>
+        <div class="carousel-wrapper">
+            <div class="carousel-container" id="carouselContainer">
             <!-- Multiple sets for infinite loop -->
-            <div class="carousel-item" data-index="0">
-                <img src="https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?w=243&h=243&fit=crop" alt="Project 1">
-                <video loop muted playsinline>
-                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-                </video>
+            <div class="carousel-item" data-index="0" data-title="URBAN JURGENSEN NEW WEBSITE" data-year="2025">
+                <div class="carousel-item-inner">
+                    <img src="https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?w=243&h=243&fit=crop" alt="Project 1">
+                    <video loop muted playsinline>
+                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    </video>
+                </div>
             </div>
-            <div class="carousel-item" data-index="1">
-                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=243&h=243&fit=crop" alt="Project 2">
-                <video loop muted playsinline>
-                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-                </video>
+            <div class="carousel-item" data-index="1" data-title="F.P.JOURNE COLLECTION" data-year="2024">
+                <div class="carousel-item-inner">
+                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=243&h=243&fit=crop" alt="Project 2">
+                    <video loop muted playsinline>
+                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    </video>
+                </div>
             </div>
-            <div class="carousel-item" data-index="2">
-                <img src="https://images.unsplash.com/photo-1594534475808-b18fc33b045e?w=243&h=243&fit=crop" alt="Project 3">
-                <video loop muted playsinline>
-                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-                </video>
+            <div class="carousel-item" data-index="2" data-title="ZODIAC HERITAGE" data-year="2024">
+                <div class="carousel-item-inner">
+                    <img src="https://images.unsplash.com/photo-1594534475808-b18fc33b045e?w=243&h=243&fit=crop" alt="Project 3">
+                    <video loop muted playsinline>
+                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    </video>
+                </div>
             </div>
-            <div class="carousel-item" data-index="3">
-                <img src="https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=243&h=243&fit=crop" alt="Project 4">
-                <video loop muted playsinline>
-                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-                </video>
+            <div class="carousel-item" data-index="3" data-title="PARMIGIANI FLEURIER" data-year="2024">
+                <div class="carousel-item-inner">
+                    <img src="https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=243&h=243&fit=crop" alt="Project 4">
+                    <video loop muted playsinline>
+                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    </video>
+                </div>
             </div>
-            <div class="carousel-item" data-index="4">
-                <img src="https://images.unsplash.com/photo-1560343090-f0409e92791a?w=243&h=243&fit=crop" alt="Project 5">
-                <video loop muted playsinline>
-                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-                </video>
+            <div class="carousel-item" data-index="4" data-title="HINE COGNAC" data-year="2023">
+                <div class="carousel-item-inner">
+                    <img src="https://images.unsplash.com/photo-1560343090-f0409e92791a?w=243&h=243&fit=crop" alt="Project 5">
+                    <video loop muted playsinline>
+                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    </video>
+                </div>
             </div>
-            <div class="carousel-item" data-index="5">
-                <img src="https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?w=243&h=243&fit=crop" alt="Project 6">
-                <video loop muted playsinline>
-                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-                </video>
+            <div class="carousel-item" data-index="5" data-title="LE GRAND TOUR" data-year="2023">
+                <div class="carousel-item-inner">
+                    <img src="https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?w=243&h=243&fit=crop" alt="Project 6">
+                    <video loop muted playsinline>
+                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    </video>
+                </div>
             </div>
             <!-- Duplicate set 1 -->
-            <div class="carousel-item" data-index="0">
-                <img src="https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?w=243&h=243&fit=crop" alt="Project 1">
-                <video loop muted playsinline>
-                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-                </video>
+            <div class="carousel-item" data-index="0" data-title="URBAN JURGENSEN NEW WEBSITE" data-year="2025">
+                <div class="carousel-item-inner">
+                    <img src="https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?w=243&h=243&fit=crop" alt="Project 1">
+                    <video loop muted playsinline>
+                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    </video>
+                </div>
             </div>
-            <div class="carousel-item" data-index="1">
-                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=243&h=243&fit=crop" alt="Project 2">
-                <video loop muted playsinline>
-                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-                </video>
+            <div class="carousel-item" data-index="1" data-title="F.P.JOURNE COLLECTION" data-year="2024">
+                <div class="carousel-item-inner">
+                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=243&h=243&fit=crop" alt="Project 2">
+                    <video loop muted playsinline>
+                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    </video>
+                </div>
             </div>
-            <div class="carousel-item" data-index="2">
-                <img src="https://images.unsplash.com/photo-1594534475808-b18fc33b045e?w=243&h=243&fit=crop" alt="Project 3">
-                <video loop muted playsinline>
-                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-                </video>
+            <div class="carousel-item" data-index="2" data-title="ZODIAC HERITAGE" data-year="2024">
+                <div class="carousel-item-inner">
+                    <img src="https://images.unsplash.com/photo-1594534475808-b18fc33b045e?w=243&h=243&fit=crop" alt="Project 3">
+                    <video loop muted playsinline>
+                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    </video>
+                </div>
             </div>
-            <div class="carousel-item" data-index="3">
-                <img src="https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=243&h=243&fit=crop" alt="Project 4">
-                <video loop muted playsinline>
-                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-                </video>
+            <div class="carousel-item" data-index="3" data-title="PARMIGIANI FLEURIER" data-year="2024">
+                <div class="carousel-item-inner">
+                    <img src="https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=243&h=243&fit=crop" alt="Project 4">
+                    <video loop muted playsinline>
+                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    </video>
+                </div>
             </div>
-            <div class="carousel-item" data-index="4">
-                <img src="https://images.unsplash.com/photo-1560343090-f0409e92791a?w=243&h=243&fit=crop" alt="Project 5">
-                <video loop muted playsinline>
-                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-                </video>
+            <div class="carousel-item" data-index="4" data-title="HINE COGNAC" data-year="2023">
+                <div class="carousel-item-inner">
+                    <img src="https://images.unsplash.com/photo-1560343090-f0409e92791a?w=243&h=243&fit=crop" alt="Project 5">
+                    <video loop muted playsinline>
+                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    </video>
+                </div>
             </div>
-            <div class="carousel-item" data-index="5">
-                <img src="https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?w=243&h=243&fit=crop" alt="Project 6">
-                <video loop muted playsinline>
-                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-                </video>
+            <div class="carousel-item" data-index="5" data-title="LE GRAND TOUR" data-year="2023">
+                <div class="carousel-item-inner">
+                    <img src="https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?w=243&h=243&fit=crop" alt="Project 6">
+                    <video loop muted playsinline>
+                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    </video>
+                </div>
             </div>
             <!-- Duplicate set 2 -->
-            <div class="carousel-item" data-index="0">
-                <img src="https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?w=243&h=243&fit=crop" alt="Project 1">
-                <video loop muted playsinline>
-                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-                </video>
+            <div class="carousel-item" data-index="0" data-title="URBAN JURGENSEN NEW WEBSITE" data-year="2025">
+                <div class="carousel-item-inner">
+                    <img src="https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?w=243&h=243&fit=crop" alt="Project 1">
+                    <video loop muted playsinline>
+                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    </video>
+                </div>
             </div>
-            <div class="carousel-item" data-index="1">
-                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=243&h=243&fit=crop" alt="Project 2">
-                <video loop muted playsinline>
-                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-                </video>
+            <div class="carousel-item" data-index="1" data-title="F.P.JOURNE COLLECTION" data-year="2024">
+                <div class="carousel-item-inner">
+                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=243&h=243&fit=crop" alt="Project 2">
+                    <video loop muted playsinline>
+                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    </video>
+                </div>
             </div>
-            <div class="carousel-item" data-index="2">
-                <img src="https://images.unsplash.com/photo-1594534475808-b18fc33b045e?w=243&h=243&fit=crop" alt="Project 3">
-                <video loop muted playsinline>
-                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-                </video>
+            <div class="carousel-item" data-index="2" data-title="ZODIAC HERITAGE" data-year="2024">
+                <div class="carousel-item-inner">
+                    <img src="https://images.unsplash.com/photo-1594534475808-b18fc33b045e?w=243&h=243&fit=crop" alt="Project 3">
+                    <video loop muted playsinline>
+                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    </video>
+                </div>
             </div>
-            <div class="carousel-item" data-index="3">
-                <img src="https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=243&h=243&fit=crop" alt="Project 4">
-                <video loop muted playsinline>
-                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-                </video>
+            <div class="carousel-item" data-index="3" data-title="PARMIGIANI FLEURIER" data-year="2024">
+                <div class="carousel-item-inner">
+                    <img src="https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=243&h=243&fit=crop" alt="Project 4">
+                    <video loop muted playsinline>
+                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    </video>
+                </div>
             </div>
-            <div class="carousel-item" data-index="4">
-                <img src="https://images.unsplash.com/photo-1560343090-f0409e92791a?w=243&h=243&fit=crop" alt="Project 5">
-                <video loop muted playsinline>
-                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-                </video>
+            <div class="carousel-item" data-index="4" data-title="HINE COGNAC" data-year="2023">
+                <div class="carousel-item-inner">
+                    <img src="https://images.unsplash.com/photo-1560343090-f0409e92791a?w=243&h=243&fit=crop" alt="Project 5">
+                    <video loop muted playsinline>
+                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    </video>
+                </div>
             </div>
-            <div class="carousel-item" data-index="5">
-                <img src="https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?w=243&h=243&fit=crop" alt="Project 6">
-                <video loop muted playsinline>
-                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-                </video>
+            <div class="carousel-item" data-index="5" data-title="LE GRAND TOUR" data-year="2023">
+                <div class="carousel-item-inner">
+                    <img src="https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?w=243&h=243&fit=crop" alt="Project 6">
+                    <video loop muted playsinline>
+                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
             </div>
         </div>
     </div>
@@ -1292,117 +1372,25 @@
             }
         });
 
-        // Project title hover to carousel positioning
-        const projectLinks = document.querySelectorAll('.projects-list a[data-carousel-index]');
+        // Carousel item hover label functionality
+        const hoverLabel = document.getElementById('carouselHoverLabel');
         const allCarouselItems = document.querySelectorAll('.carousel-item');
-        let currentHoveredItem = null;
 
-        projectLinks.forEach(link => {
-            link.addEventListener('mouseenter', (e) => {
-                e.preventDefault();
-                const targetIndex = parseInt(link.getAttribute('data-carousel-index'));
+        allCarouselItems.forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                const title = item.getAttribute('data-title');
+                const year = item.getAttribute('data-year');
 
-                if (!isNaN(targetIndex)) {
-                    // Calculate item width dynamically
-                    const firstItem = carouselContainer.querySelector('.carousel-item');
-                    const itemWidth = firstItem ? firstItem.offsetWidth + 8 : 0;
-
-                    // Calculate viewport width and center position
-                    const viewportWidth = window.innerWidth;
-                    const centerOffset = viewportWidth / 2;
-                    const itemCenterOffset = itemWidth / 2;
-
-                    // Find all items with the matching index
-                    const matchingItems = Array.from(allCarouselItems).filter(item =>
-                        parseInt(item.getAttribute('data-index')) === targetIndex
-                    );
-
-                    if (matchingItems.length > 0) {
-                        // Find the closest matching item to current position
-                        let closestItem = null;
-                        let smallestDistance = Infinity;
-
-                        matchingItems.forEach(item => {
-                            const itemPosition = item.offsetLeft;
-                            const targetPosition = -carouselOffset + centerOffset;
-                            const distance = Math.abs(itemPosition - targetPosition);
-
-                            if (distance < smallestDistance) {
-                                smallestDistance = distance;
-                                closestItem = item;
-                            }
-                        });
-
-                        if (closestItem) {
-                            // Stop previous video if any
-                            if (currentHoveredItem && currentHoveredItem !== closestItem) {
-                                const prevVideo = currentHoveredItem.querySelector('video');
-                                if (prevVideo) {
-                                    prevVideo.pause();
-                                    prevVideo.currentTime = 0;
-                                }
-                                currentHoveredItem.classList.remove('playing');
-                            }
-
-                            currentHoveredItem = closestItem;
-                            currentHoveredItem.classList.add('playing');
-
-                            // Position the carousel so the closest matching item is centered
-                            const targetOffset = -closestItem.offsetLeft + centerOffset - itemCenterOffset;
-
-                            // Smoothly animate to the target position
-                            const currentOffset = carouselOffset;
-                            const distance = targetOffset - currentOffset;
-
-                            // Animate over time
-                            let startTime = null;
-                            const duration = 600; // 600ms animation
-
-                            function animateToPosition(timestamp) {
-                                if (!startTime) startTime = timestamp;
-                                const elapsed = timestamp - startTime;
-                                const progress = Math.min(elapsed / duration, 1);
-
-                                // Easing function (ease-out cubic)
-                                const easeProgress = 1 - Math.pow(1 - progress, 3);
-
-                                carouselOffset = currentOffset + (distance * easeProgress);
-                                carouselContainer.style.transform = `translateX(${carouselOffset}px)`;
-
-                                if (progress < 1) {
-                                    requestAnimationFrame(animateToPosition);
-                                } else {
-                                    // Animation complete - play the video
-                                    const video = closestItem.querySelector('video');
-                                    if (video) {
-                                        console.log('Playing video for item:', closestItem);
-                                        video.muted = true; // Ensure muted for autoplay
-                                        video.play().catch(err => {
-                                            console.log('Video play failed:', err);
-                                        });
-                                    } else {
-                                        console.log('No video found in item');
-                                    }
-                                }
-                            }
-
-                            requestAnimationFrame(animateToPosition);
-                        }
-                    }
+                if (title && year) {
+                    // Show hover label with project info on single line
+                    hoverLabel.innerHTML = `${title} ${year}`;
+                    hoverLabel.classList.add('visible');
                 }
             });
 
-            link.addEventListener('mouseleave', () => {
-                // Stop video when mouse leaves project title
-                if (currentHoveredItem) {
-                    const video = currentHoveredItem.querySelector('video');
-                    if (video) {
-                        video.pause();
-                        video.currentTime = 0;
-                    }
-                    currentHoveredItem.classList.remove('playing');
-                    currentHoveredItem = null;
-                }
+            item.addEventListener('mouseleave', () => {
+                // Hide hover label
+                hoverLabel.classList.remove('visible');
             });
         });
     </script>
