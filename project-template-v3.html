@@ -324,11 +324,15 @@
 
         /* ===== PAGE TITLE ===== */
         .page-title {
-            margin: 340px 0 0;
+            position: absolute;
+            bottom: 24px;
+            left: 24px;
+            right: 24px;
+            margin: 0;
         }
 
         .page-title h1 {
-            font-size: 140px;
+            font-size: 9.72vw; /* 140px at 1440px viewport */
             line-height: 0.9;
             text-transform: uppercase;
             color: rgba(238, 238, 238, 0.93);
@@ -338,7 +342,7 @@
         }
 
         .page-title h2 {
-            font-size: 140px;
+            font-size: 9.72vw; /* 140px at 1440px viewport */
             line-height: 0.9;
             text-transform: uppercase;
             color: rgba(238, 238, 238, 0.93);
@@ -348,28 +352,37 @@
             margin: 0;
         }
 
+        /* ===== FIRST VIEWPORT SECTION ===== */
+        .first-viewport {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+        }
+
         /* ===== INTRO TEXT SECTION ===== */
         .intro-text-section {
             display: grid;
             grid-template-columns: repeat(12, 1fr);
             column-gap: 16px;
             padding: 0 24px;
-            margin-top: 72px; /* Spacing from title */
+            margin-top: 72px; /* Spacing after first viewport */
         }
 
         .intro-text-content {
-            grid-column: 8 / 13; /* Takes 5 columns (8-13), leaving 0 columns margin from right */
+            grid-column: 7 / 13; /* Takes 6 columns (7-13), leaving 0 columns margin from right */
             display: flex;
             flex-direction: column;
             gap: 12px;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+            animation-delay: 0.3s;
         }
 
         .intro-text-label {
             font-size: 12px;
             letter-spacing: 0.48px;
             text-transform: uppercase;
-            color: rgba(238, 238, 238, 0.93);
-            mix-blend-mode: exclusion;
+            color: #1B1B1B;
             font-weight: 400;
         }
 
@@ -377,7 +390,7 @@
             font-size: 24px;
             line-height: 1.3;
             letter-spacing: 0.24px;
-            color: #1b1b1b;
+            color: #1B1B1B;
             font-weight: 300;
         }
 
@@ -439,47 +452,59 @@
 
         .section-1 .gallery-image-portrait {
             position: relative;
-            width: 30%; /* Smaller centered portrait */
-            max-width: 432px;
-            aspect-ratio: 9/16;
+            width: 26.04%; /* 375px / 1440px */
+            height: 551px;
             z-index: 2;
+            overflow: hidden;
         }
 
         .section-1 .gallery-image-portrait img {
+            position: absolute;
             width: 100%;
             height: 100%;
+            left: 0;
+            top: 0;
             object-fit: cover;
+            object-position: 50% 50%;
+            transform: none;
         }
 
-        .section-1 .gallery-image-portrait img {
-            transform: scale(1);
-        }
-
-        /* Section 2: Two portrait images side by side */
+        /* Section 2: Three portrait images */
         .section-2 {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            column-gap: 16px;
-            margin-top: 120px;
+            position: relative;
+            margin-top: 137px;
             margin-bottom: 120px;
+            height: 766px; /* 215px (offset) + 551px (image height) */
+        }
+
+        .section-2 .gallery-image {
+            position: absolute;
+            width: 375px;
+            height: 551px;
+            overflow: hidden;
         }
 
         .section-2 .gallery-image:first-child {
-            grid-column: 2 / 5; /* Columns 2-4 (3.5 columns with gap) */
-            aspect-ratio: 9/16;
-            margin-top: -40px; /* Offset for visual interest */
+            left: 142px;
+            top: 0;
         }
 
-        .section-2 .gallery-image:last-child {
-            grid-column: 5 / 8; /* Columns 5-7 (3.5 columns with gap) */
-            aspect-ratio: 9/16;
-            margin-top: 40px; /* Offset for visual interest */
+        .section-2 .gallery-image:nth-child(2) {
+            left: 533px;
+            top: 78px; /* 215px - 137px */
+        }
+
+        .section-2 .gallery-image:nth-child(3) {
+            left: 925px;
+            top: 0;
         }
 
         .section-2 .gallery-image img {
-            width: 100%;
-            height: 100%;
+            width: 110%;
+            height: 110%;
             object-fit: cover;
+            object-position: 50% 50%;
+            position: relative;
         }
 
         /* Section 3: Full width image */
@@ -516,39 +541,95 @@
             display: none;
         }
 
-        /* ===== PARAGRAPH SECTION ===== */
-        .paragraph-section {
-            margin-top: 200px;
-            margin-bottom: 290px;
-            clear: both;
+        /* ===== TWO COLUMN TEXT SECTION ===== */
+        .two-col-text-section {
+            padding: 80px 24px 24px 24px;
+            margin-top: 0;
+            margin-bottom: 0;
         }
 
-        .paragraph-section .container {
+        .text-blocks {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 24px;
         }
 
-        .paragraph-section p {
-            width: 31.53%;
-            font-size: 14px;
+        .text-block {
+            width: 688px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .text-block-label {
+            font-size: 12px;
+            letter-spacing: 0.48px;
+            text-transform: uppercase;
+            color: #1B1B1B;
+            font-weight: 400;
+        }
+
+        .text-block-paragraph {
+            font-size: 24px;
             line-height: 1.3;
-            text-align: justify;
-            letter-spacing: 0.14px;
+            letter-spacing: 0.24px;
+            color: #1B1B1B;
+            font-weight: 300;
         }
 
-        /* ===== FULL VIEWPORT IMAGE ===== */
-        .full-viewport-image {
-            width: 100vw;
-            height: 100vh;
+        /* ===== DOUBLE HEIGHT SECTION ===== */
+        .double-height-section {
+            width: 100%;
+            height: 200vh;
             position: relative;
             overflow: hidden;
+            background: #F5F6F5;
         }
 
-        .full-viewport-image img {
+        .double-height-section .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .double-height-section .background-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: block;
+            object-position: 50% 50%;
+        }
+
+        .double-height-section .centered-landscape {
+            position: absolute;
+            width: 1158px;
+            height: 652px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        .double-height-section .centered-landscape img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: 50% 50%;
+        }
+
+        .double-height-section .centered-landscape::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            pointer-events: none;
         }
 
         /* ===== OTHER PROJECTS SECTION ===== */
@@ -564,12 +645,11 @@
         }
 
         .carousel-hover-label {
-            grid-column: 11 / 13; /* Last 2 columns */
+            grid-column: 1 / 13;
             font-size: 12px;
             letter-spacing: 0.48px;
             text-transform: uppercase;
-            color: rgba(238, 238, 238, 0.93);
-            mix-blend-mode: exclusion;
+            color: #1B1B1B;
             font-weight: 400;
             text-align: right;
             opacity: 0;
@@ -577,8 +657,7 @@
             pointer-events: none;
             white-space: nowrap;
             z-index: 50;
-            align-self: end;
-            margin-bottom: 24px; /* 24px above carousel */
+            margin-bottom: 24px;
         }
 
         .carousel-hover-label.visible {
@@ -790,8 +869,8 @@
         }
 
         .carousel-item {
-            width: calc((100vw - (8px * 5)) / 6); /* 6 items with 5 gaps of 8px */
-            height: calc((100vw - (8px * 5)) / 6);
+            width: calc((100vw - (8px * 3)) / 4); /* 4 items with 3 gaps of 8px */
+            height: calc((100vw - (8px * 3)) / 4);
             flex-shrink: 0;
             position: relative;
             overflow: hidden;
@@ -839,7 +918,7 @@
         @media (max-width: 1024px) {
             .page-title h1,
             .page-title h2 {
-                font-size: 96px;
+                font-size: 9.38vw; /* 96px at 1024px viewport */
             }
 
             .projects-list a {
@@ -859,13 +938,23 @@
                 margin-top: 400px;
             }
 
-            .paragraph-section {
-                margin-top: 300px;
-                margin-bottom: 200px;
+            .two-col-text-section {
+                padding: 60px 24px;
             }
 
-            .paragraph-section p {
-                width: 50%;
+            .text-blocks {
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .text-block {
+                width: 100%;
+            }
+
+            .double-height-section .centered-landscape {
+                width: 80%;
+                height: auto;
+                aspect-ratio: 16/9;
             }
         }
 
@@ -894,13 +983,9 @@
                 padding-top: 100px;
             }
 
-            .page-title {
-                margin-top: 200px;
-            }
-
             .page-title h1,
             .page-title h2 {
-                font-size: 48px;
+                font-size: 6.25vw; /* 48px at 768px viewport */
             }
 
             .gallery {
@@ -927,13 +1012,27 @@
                 margin-top: 100px;
             }
 
-            .paragraph-section {
-                margin-top: 150px;
-                margin-bottom: 150px;
+            .two-col-text-section {
+                padding: 40px 16px;
             }
 
-            .paragraph-section p {
-                width: 100%;
+            .text-blocks {
+                flex-direction: column;
+                gap: 32px;
+            }
+
+            .text-block-paragraph {
+                font-size: 18px;
+            }
+
+            .double-height-section {
+                height: 150vh;
+            }
+
+            .double-height-section .centered-landscape {
+                width: 90%;
+                height: auto;
+                aspect-ratio: 16/9;
             }
 
             .projects-list a {
@@ -1000,7 +1099,7 @@
         @media (max-width: 480px) {
             .page-title h1,
             .page-title h2 {
-                font-size: 36px;
+                font-size: 7.5vw; /* 36px at 480px viewport */
             }
 
             .projects-list a {
@@ -1041,44 +1140,45 @@
         </a>
     </div>
 
-    <!-- Launch Link & Info Table -->
-    <div class="container">
-        <div class="launch-section">
-            <div class="launch-link hero-text-reveal" style="animation-delay: 0.8s;">
-                <a href="#">
-                    <span class="rotate-text-inner">
-                        <span>launch website</span>
-                        <span>launch website</span>
-                    </span>
-                </a>
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path d="M4 12L12 4M12 4H4M12 4V12" stroke="#166dee" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </div>
+    <!-- First Viewport with Launch Info and Title -->
+    <div class="first-viewport">
+        <!-- Launch Link & Info Table -->
+        <div class="container">
+            <div class="launch-section">
+                <div class="launch-link hero-text-reveal" style="animation-delay: 0.8s;">
+                    <a href="#">
+                        <span class="rotate-text-inner">
+                            <span>launch website</span>
+                            <span>launch website</span>
+                        </span>
+                    </a>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M4 12L12 4M12 4H4M12 4V12" stroke="#166dee" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
 
-            <div class="info-table">
-                <div class="info-row">
-                    <span>scope</span>
-                    <span>UX strategy, design system, full website redesign</span>
-                </div>
-                <div class="info-row">
-                    <span>role</span>
-                    <span>ux/ui design lead</span>
-                </div>
-                <div class="info-row">
-                    <span>launch year</span>
-                    <span>2025</span>
-                </div>
-                <div class="info-row">
-                    <span>project duration</span>
-                    <span>2 years</span>
+                <div class="info-table">
+                    <div class="info-row">
+                        <span>scope</span>
+                        <span>UX strategy, design system, full website redesign</span>
+                    </div>
+                    <div class="info-row">
+                        <span>role</span>
+                        <span>ux/ui design lead</span>
+                    </div>
+                    <div class="info-row">
+                        <span>launch year</span>
+                        <span>2025</span>
+                    </div>
+                    <div class="info-row">
+                        <span>project duration</span>
+                        <span>2 years</span>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Page Title -->
-    <div class="container">
+        <!-- Page Title -->
         <div class="page-title">
             <h1 class="reveal-text" id="titleLine1">patek philippe</h1>
             <h2 class="reveal-text" id="titleLine2">design system</h2>
@@ -1105,7 +1205,7 @@
             </div>
         </div>
 
-        <!-- Section 2: Two portrait images -->
+        <!-- Section 2: Three portrait images -->
         <div class="gallery-section section-2">
             <div class="gallery-image">
                 <img src="https://images.unsplash.com/photo-1594534475808-b18fc33b045e?w=600&h=1067&fit=crop" alt="Project image 2">
@@ -1113,20 +1213,35 @@
             <div class="gallery-image">
                 <img src="https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=600&h=1067&fit=crop" alt="Project image 3">
             </div>
+            <div class="gallery-image">
+                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=1067&fit=crop" alt="Project image 4">
+            </div>
         </div>
 
     </div>
 
-    <!-- Paragraph -->
-    <div class="paragraph-section">
-        <div class="container">
-            <p>Lorem ipsum dolor sit amet consectetur. Felis nisl placerat amet dictum cras sed ornare. Amet mauris magna nec ullamcorper sit. Tellus sed pellentesque amet sollicitudin. Blandit at a condimentum cursus in amet rutrum aliquet. Ac nec id et a. Nunc phasellus at faucibus mi et aenean. Sit eget proin massa nunc viverra.</p>
+    <!-- Two Column Text Section -->
+    <div class="two-col-text-section">
+        <div class="text-blocks">
+            <div class="text-block">
+                <p class="text-block-label">thoughts</p>
+                <p class="text-block-paragraph">Lorem ipsum dolor sit amet consectetur. Felis nisl placerat amet dictum cras sed ornare. Amet mauris magna nec ullamcorper sit. Tellus sed pellentesque amet sollicitudin. Blandit at a condimentum cursus in amet rutrum aliquet. Ac nec id et a. Nunc phasellus at faucibus mi et aenean. Sit eget proin massa.</p>
+            </div>
+            <div class="text-block">
+                <p class="text-block-label">thoughts</p>
+                <p class="text-block-paragraph">Lorem ipsum dolor sit amet consectetur. Felis nisl placerat amet dictum cras sed ornare. Amet mauris magna nec ullamcorper sit. Tellus sed pellentesque amet sollicitudin. Blandit at a condimentum cursus in amet rutrum aliquet. Ac nec id et a. Nunc phasellus at faucibus mi et aenean. Sit eget proin massa.</p>
+            </div>
         </div>
     </div>
 
-    <!-- Full Viewport Image -->
-    <div class="full-viewport-image">
-        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&h=900&fit=crop" alt="Full viewport image">
+    <!-- Double Height Section -->
+    <div class="double-height-section">
+        <div class="background-image">
+            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&h=900&fit=crop" alt="Background image">
+        </div>
+        <div class="centered-landscape">
+            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1200&h=675&fit=crop" alt="Centered landscape image">
+        </div>
     </div>
 
     <!-- Bottom Carousel -->
@@ -1333,13 +1448,16 @@
         if (titleLine1) wrapLetters(titleLine1);
         if (titleLine2) wrapLetters(titleLine2);
 
-        // Parallax effect - exact copy from homepage
+        // Parallax effect - includes three images section and double height section
         const imageContainers = document.querySelectorAll('.gallery-image-large, .gallery-image-full');
+        const threeImageBoxes = document.querySelectorAll('.section-2 .gallery-image');
+        const doubleHeightImage = document.querySelector('.double-height-section .centered-landscape');
 
         function updateParallax() {
             const scrollY = window.scrollY;
             const windowHeight = window.innerHeight;
 
+            // Parallax for regular image containers (image inside moves)
             imageContainers.forEach(container => {
                 const rect = container.getBoundingClientRect();
                 const containerTop = rect.top + scrollY;
@@ -1359,6 +1477,56 @@
                     }
                 }
             });
+
+            // Parallax for three image boxes (entire box moves with different speeds)
+            threeImageBoxes.forEach((box, index) => {
+                const rect = box.getBoundingClientRect();
+                const containerTop = rect.top + scrollY;
+                const containerHeight = rect.height;
+
+                // Calculate when container is in viewport
+                const inViewport = rect.top < windowHeight && rect.bottom > 0;
+
+                if (inViewport) {
+                    // Different parallax speeds for each box - increased for more dramatic effect
+                    const boxSpeeds = [120, 180, 150]; // Left: slower, Middle: faster, Right: medium
+                    const boxSpeed = boxSpeeds[index] || 150;
+
+                    // Calculate parallax offset for box
+                    const scrollProgress = (scrollY - containerTop + windowHeight) / (windowHeight + containerHeight);
+                    const boxParallaxOffset = scrollProgress * boxSpeed - (boxSpeed / 2);
+
+                    box.style.transform = `translateY(${boxParallaxOffset}px)`;
+
+                    // Different parallax speeds for images inside boxes (opposite direction for depth) - increased
+                    const imgSpeeds = [50, 70, 60]; // More movement inside
+                    const imgSpeed = imgSpeeds[index] || 60;
+                    const imgParallaxOffset = scrollProgress * imgSpeed - (imgSpeed / 2);
+
+                    const img = box.querySelector('img');
+                    if (img) {
+                        img.style.transform = `translateY(${-imgParallaxOffset}px)`; // Negative for opposite direction
+                    }
+                }
+            });
+
+            // Parallax for double height section centered image
+            if (doubleHeightImage) {
+                const rect = doubleHeightImage.getBoundingClientRect();
+                const containerTop = rect.top + scrollY;
+                const containerHeight = rect.height;
+
+                // Calculate when container is in viewport
+                const inViewport = rect.top < windowHeight && rect.bottom > 0;
+
+                if (inViewport) {
+                    // Calculate parallax offset
+                    const scrollProgress = (scrollY - containerTop + windowHeight) / (windowHeight + containerHeight);
+                    const parallaxOffset = scrollProgress * 100 - 50; // Range from -50px to 50px
+
+                    doubleHeightImage.style.transform = `translate(-50%, calc(-50% + ${parallaxOffset}px))`;
+                }
+            }
         }
 
         function onScroll() {
