@@ -76,6 +76,32 @@
             }
         }
 
+        /* ===== REVEAL PARAGRAPH ANIMATION ===== */
+        .reveal-paragraph {
+            opacity: 0;
+        }
+
+        .reveal-paragraph.animate {
+            opacity: 1;
+        }
+
+        .reveal-paragraph.animate .word {
+            display: inline-block;
+            animation: revealWordSubtle 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes revealWordSubtle {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         /* ===== FIXED HEADER ELEMENTS ===== */
         .video-box {
             position: fixed;
@@ -111,6 +137,7 @@
             display: inline-block;
             overflow: hidden;
             vertical-align: top;
+            font-weight: 400;
         }
 
         .top-menu a .rotate-text-inner {
@@ -166,6 +193,7 @@
             display: inline-block;
             overflow: hidden;
             vertical-align: top;
+            font-weight: 400;
         }
 
         .launch-link a .rotate-text-inner {
@@ -365,7 +393,7 @@
             grid-template-columns: repeat(12, 1fr);
             column-gap: 16px;
             padding: 0 24px;
-            margin-top: 72px; /* Spacing after first viewport */
+            margin-top: calc(16.67vh - 24px); /* 240px total spacing minus 24px bottom padding of first-viewport */
         }
 
         .intro-text-content {
@@ -397,7 +425,7 @@
         /* ===== IMAGE GALLERY ===== */
         .gallery {
             position: relative;
-            margin-top: 276px;
+            margin-top: 16.67vh; /* 240px as viewport height */
         }
 
         .gallery-section {
@@ -461,7 +489,7 @@
         .section-1 .gallery-image-portrait img {
             position: absolute;
             width: 100%;
-            height: 100%;
+            height: 110%;
             left: 0;
             top: 0;
             object-fit: cover;
@@ -472,7 +500,7 @@
         /* Section 2: Three portrait images */
         .section-2 {
             position: relative;
-            margin-top: 137px;
+            margin-top: calc(16.67vh + 90px); /* 240px as vh + compensation for parallax starting position (middle box starts at -90px) */
             margin-bottom: 120px;
             height: 766px; /* 215px (offset) + 551px (image height) */
         }
@@ -482,6 +510,14 @@
             width: 375px;
             height: 551px;
             overflow: hidden;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .section-2 .gallery-image.reveal {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .section-2 .gallery-image:first-child {
@@ -541,41 +577,88 @@
             display: none;
         }
 
-        /* ===== TWO COLUMN TEXT SECTION ===== */
-        .two-col-text-section {
-            padding: 80px 24px 24px 24px;
-            margin-top: 0;
-            margin-bottom: 0;
+        /* ===== TWO-COLUMN SMALL TEXT SECTION ===== */
+        .two-column-text-section {
+            position: relative;
+            padding: 0 24px;
+            margin-top: 16.67vh; /* 240px as viewport height */
+            margin-bottom: 120px;
         }
 
-        .text-blocks {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 24px;
+        .two-column-text-container {
+            position: relative;
+            width: 100%;
+            max-width: 1392px;
+            margin: 0 auto;
+            height: 360px; /* Approximate height: 120px top spacing + 12px label + 12px gap + ~200px paragraph */
         }
 
-        .text-block {
-            width: 688px;
+        .two-column-text-block {
+            position: absolute;
+            width: 571px;
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
 
-        .text-block-label {
+        .two-column-text-block:first-child {
+            left: 118px; /* Adjusted to center: (1392 - 571*2 - 16) / 2 = 118px left margin */
+            top: 120px;
+        }
+
+        .two-column-text-block:last-child {
+            left: 705px; /* 118 + 571 + 16 = 705px */
+            top: 120px;
+        }
+
+        .two-column-text-label {
             font-size: 12px;
             letter-spacing: 0.48px;
             text-transform: uppercase;
-            color: #1B1B1B;
+            color: rgba(238, 238, 238, 0.93);
+            mix-blend-mode: exclusion;
             font-weight: 400;
         }
 
-        .text-block-paragraph {
-            font-size: 24px;
+        .two-column-text-paragraph {
+            font-size: 16px;
             line-height: 1.3;
-            letter-spacing: 0.24px;
+            letter-spacing: 0.16px;
             color: #1B1B1B;
             font-weight: 300;
+        }
+
+        /* ===== SINGLE TEXT SECTION ===== */
+        .single-text-section {
+            padding: 0px 24px 0px 24px;
+            margin-top: 16.67vh; /* 240px at 1440px height (240/1440*100) */
+            margin-bottom: 16.67vh; /* 240px at 1440px height */
+        }
+
+        .single-text-block {
+            width: 100%;
+            max-width: 1392px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .single-text-label {
+            font-size: 12px;
+            letter-spacing: 0.48px;
+            text-transform: uppercase;
+            color: rgba(238, 238, 238, 0.93);
+            mix-blend-mode: exclusion;
+            font-weight: 400;
+        }
+
+        .single-text-paragraph {
+            font-size: 48px;
+            line-height: 1.3;
+            letter-spacing: 0.48px;
+            color: #1B1B1B;
+            font-weight: 300;
+            width: 1392px;
         }
 
         /* ===== DOUBLE HEIGHT SECTION ===== */
@@ -646,22 +729,45 @@
 
         .carousel-hover-label {
             grid-column: 1 / 13;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 12px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            pointer-events: none;
+            z-index: 50;
+            margin-bottom: 24px;
+            max-width: 571px; /* Same width as two-column-text-block */
+            margin-left: auto;
+            min-height: 100px; /* Reserve minimum space to prevent layout shift */
+        }
+
+        .carousel-hover-subtitle {
+            display: flex;
+            justify-content: flex-start;
+            width: 100%;
             font-size: 12px;
             letter-spacing: 0.48px;
             text-transform: uppercase;
             color: #1B1B1B;
             font-weight: 400;
-            text-align: right;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-            white-space: nowrap;
-            z-index: 50;
-            margin-bottom: 24px;
+        }
+
+        .carousel-hover-paragraph {
+            font-size: 16px;
+            line-height: 1.3;
+            letter-spacing: 0.16px;
+            color: #1B1B1B;
+            font-weight: 300;
+            text-align: left;
+            width: 100%;
         }
 
         .carousel-hover-label.visible {
             opacity: 1;
+            visibility: visible;
         }
 
         .projects-layout {
@@ -818,6 +924,33 @@
         .footer-links a {
             color: inherit;
             text-decoration: none;
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+            vertical-align: top;
+        }
+
+        .footer-links a .rotate-text-inner {
+            display: block;
+            transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .footer-links a:hover .rotate-text-inner {
+            transform: translateY(-100%);
+        }
+
+        .footer-links a .rotate-text-inner > span {
+            display: block;
+            white-space: nowrap;
+            padding-top: 0.2em;
+            padding-bottom: 0.05em;
+        }
+
+        .footer-links a .rotate-text-inner > span:last-child {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
         }
 
         .footer-image {
@@ -869,8 +1002,8 @@
         }
 
         .carousel-item {
-            width: calc((100vw - (8px * 3)) / 4); /* 4 items with 3 gaps of 8px */
-            height: calc((100vw - (8px * 3)) / 4);
+            width: 27.78vw; /* 400px at 1440px viewport (400/1440*100) */
+            height: 27.78vw;
             flex-shrink: 0;
             position: relative;
             overflow: hidden;
@@ -938,16 +1071,12 @@
                 margin-top: 400px;
             }
 
-            .two-col-text-section {
-                padding: 60px 24px;
+            .single-text-section {
+                padding: 60px 24px 24px 24px;
             }
 
-            .text-blocks {
-                flex-direction: column;
-                gap: 40px;
-            }
-
-            .text-block {
+            .single-text-paragraph {
+                font-size: 36px;
                 width: 100%;
             }
 
@@ -1012,16 +1141,20 @@
                 margin-top: 100px;
             }
 
-            .two-col-text-section {
-                padding: 40px 16px;
+            .single-text-section {
+                padding: 40px 16px 24px 16px;
             }
 
-            .text-blocks {
-                flex-direction: column;
-                gap: 32px;
+            .single-text-paragraph {
+                font-size: 24px;
+                width: 100%;
             }
 
-            .text-block-paragraph {
+            .carousel-hover-label {
+                max-width: 100%;
+            }
+
+            .carousel-hover-paragraph {
                 font-size: 18px;
             }
 
@@ -1121,6 +1254,9 @@
     </style>
 </head>
 <body>
+    <!-- Full Page Line Art Trail Canvas -->
+    <canvas id="fullPageTrailCanvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; display: none;"></canvas>
+
     <!-- Video Box - Link to Homepage -->
     <a href="index.html" class="video-box"></a>
 
@@ -1189,7 +1325,7 @@
     <div class="intro-text-section">
         <div class="intro-text-content">
             <p class="intro-text-label">thoughts</p>
-            <p class="intro-text-paragraph">Lorem ipsum dolor sit amet consectetur. Felis nisl placerat amet dictum cras sed ornare. Amet mauris magna nec ullamcorper sit. Tellus sed pellentesque amet sollicitudin. Blandit at a condimentum cursus in amet rutrum aliquet. Ac nec id et a. Nunc phasellus at faucibus mi et aenean. Sit eget proin massa.</p>
+            <p class="intro-text-paragraph reveal-paragraph">Lorem ipsum dolor sit amet consectetur. Felis nisl placerat amet dictum cras sed ornare. Amet mauris magna nec ullamcorper sit. Tellus sed pellentesque amet sollicitudin. Blandit at a condimentum cursus in amet rutrum aliquet. Ac nec id et a. Nunc phasellus at faucibus mi et aenean. Sit eget proin massa.</p>
         </div>
     </div>
 
@@ -1204,7 +1340,24 @@
                 <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=432&h=768&fit=crop" alt="Project image 1">
             </div>
         </div>
+    </div>
 
+    <!-- Two-Column Small Text Section -->
+    <div class="two-column-text-section">
+        <div class="two-column-text-container">
+            <div class="two-column-text-block">
+                <p class="two-column-text-label">thoughts</p>
+                <p class="two-column-text-paragraph reveal-paragraph">Lorem ipsum dolor sit amet consectetur. Felis nisl placerat amet dictum cras sed ornare. Amet mauris magna nec ullamcorper sit. Tellus sed pellentesque amet sollicitudin. Blandit at a condimentum cursus in amet rutrum aliquet. Ac nec id et a. Nunc phasellus at faucibus mi et aenean. Sit eget proin massa.</p>
+            </div>
+            <div class="two-column-text-block">
+                <p class="two-column-text-label">thoughts</p>
+                <p class="two-column-text-paragraph reveal-paragraph">Lorem ipsum dolor sit amet consectetur. Felis nisl placerat amet dictum cras sed ornare. Amet mauris magna nec ullamcorper sit. Tellus sed pellentesque amet sollicitudin. Blandit at a condimentum cursus in amet rutrum aliquet. Ac nec id et a. Nunc phasellus at faucibus mi et aenean. Sit eget proin massa.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gallery Continued -->
+    <div class="gallery">
         <!-- Section 2: Three portrait images -->
         <div class="gallery-section section-2">
             <div class="gallery-image">
@@ -1220,17 +1373,11 @@
 
     </div>
 
-    <!-- Two Column Text Section -->
-    <div class="two-col-text-section">
-        <div class="text-blocks">
-            <div class="text-block">
-                <p class="text-block-label">thoughts</p>
-                <p class="text-block-paragraph">Lorem ipsum dolor sit amet consectetur. Felis nisl placerat amet dictum cras sed ornare. Amet mauris magna nec ullamcorper sit. Tellus sed pellentesque amet sollicitudin. Blandit at a condimentum cursus in amet rutrum aliquet. Ac nec id et a. Nunc phasellus at faucibus mi et aenean. Sit eget proin massa.</p>
-            </div>
-            <div class="text-block">
-                <p class="text-block-label">thoughts</p>
-                <p class="text-block-paragraph">Lorem ipsum dolor sit amet consectetur. Felis nisl placerat amet dictum cras sed ornare. Amet mauris magna nec ullamcorper sit. Tellus sed pellentesque amet sollicitudin. Blandit at a condimentum cursus in amet rutrum aliquet. Ac nec id et a. Nunc phasellus at faucibus mi et aenean. Sit eget proin massa.</p>
-            </div>
+    <!-- Single Text Section -->
+    <div class="single-text-section">
+        <div class="single-text-block">
+            <p class="single-text-label">thoughts</p>
+            <p class="single-text-paragraph reveal-paragraph">Lorem ipsum dolor sit amet consectetur. Felis nisl placerat amet dictum cras sed ornare. Amet mauris magna nec ullamcorper sit. Tellus sed pellentesque amet sollicitudin. Blandit at a condimentum cursus in amet rutrum aliquet. Ac nec id et a. Nunc phasellus at faucibus mi et aenean. Sit eget proin massa.</p>
         </div>
     </div>
 
@@ -1247,11 +1394,16 @@
     <!-- Bottom Carousel -->
     <div class="carousel-section">
         <div class="whats-next">what's next</div>
-        <div class="carousel-hover-label" id="carouselHoverLabel"></div>
+        <div class="carousel-hover-label" id="carouselHoverLabel">
+            <div class="carousel-hover-subtitle">
+                <span class="carousel-hover-title"></span>
+            </div>
+            <p class="carousel-hover-paragraph"></p>
+        </div>
         <div class="carousel-wrapper">
             <div class="carousel-container" id="carouselContainer">
             <!-- Multiple sets for infinite loop -->
-            <div class="carousel-item" data-index="0" data-title="URBAN JURGENSEN NEW WEBSITE" data-year="2025">
+            <div class="carousel-item" data-index="0" data-title="urban jürgensen website refresh" data-year="2025" data-description="Lorem ipsum dolor sit amet consectetur. Felis nisl placerat amet dictum cras sed ornare. Amet mauris magna nec ullamcorper sit. Tellus sed pellentesque amet sollicitudin.">
                 <div class="carousel-item-inner">
                     <img src="https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?w=243&h=243&fit=crop" alt="Project 1">
                     <video loop muted playsinline>
@@ -1259,7 +1411,7 @@
                     </video>
                 </div>
             </div>
-            <div class="carousel-item" data-index="1" data-title="F.P.JOURNE COLLECTION" data-year="2024">
+            <div class="carousel-item" data-index="1" data-title="f.p.journe collection" data-year="2024" data-description="Lorem ipsum dolor sit amet consectetur. Felis nisl placerat amet dictum cras sed ornare. Amet mauris magna nec ullamcorper sit. Tellus sed pellentesque amet sollicitudin.">
                 <div class="carousel-item-inner">
                     <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=243&h=243&fit=crop" alt="Project 2">
                     <video loop muted playsinline>
@@ -1267,7 +1419,7 @@
                     </video>
                 </div>
             </div>
-            <div class="carousel-item" data-index="2" data-title="ZODIAC HERITAGE" data-year="2024">
+            <div class="carousel-item" data-index="2" data-title="zodiac heritage" data-year="2024" data-description="Lorem ipsum dolor sit amet consectetur. Felis nisl placerat amet dictum cras sed ornare. Amet mauris magna nec ullamcorper sit. Tellus sed pellentesque amet sollicitudin.">
                 <div class="carousel-item-inner">
                     <img src="https://images.unsplash.com/photo-1594534475808-b18fc33b045e?w=243&h=243&fit=crop" alt="Project 3">
                     <video loop muted playsinline>
@@ -1275,7 +1427,7 @@
                     </video>
                 </div>
             </div>
-            <div class="carousel-item" data-index="3" data-title="PARMIGIANI FLEURIER" data-year="2024">
+            <div class="carousel-item" data-index="3" data-title="parmigiani fleurier" data-year="2024" data-description="Lorem ipsum dolor sit amet consectetur. Felis nisl placerat amet dictum cras sed ornare. Amet mauris magna nec ullamcorper sit. Tellus sed pellentesque amet sollicitudin.">
                 <div class="carousel-item-inner">
                     <img src="https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=243&h=243&fit=crop" alt="Project 4">
                     <video loop muted playsinline>
@@ -1283,7 +1435,7 @@
                     </video>
                 </div>
             </div>
-            <div class="carousel-item" data-index="4" data-title="HINE COGNAC" data-year="2023">
+            <div class="carousel-item" data-index="4" data-title="hine cognac" data-year="2023" data-description="Lorem ipsum dolor sit amet consectetur. Felis nisl placerat amet dictum cras sed ornare. Amet mauris magna nec ullamcorper sit. Tellus sed pellentesque amet sollicitudin.">
                 <div class="carousel-item-inner">
                     <img src="https://images.unsplash.com/photo-1560343090-f0409e92791a?w=243&h=243&fit=crop" alt="Project 5">
                     <video loop muted playsinline>
@@ -1291,7 +1443,7 @@
                     </video>
                 </div>
             </div>
-            <div class="carousel-item" data-index="5" data-title="LE GRAND TOUR" data-year="2023">
+            <div class="carousel-item" data-index="5" data-title="le grand tour" data-year="2023" data-description="Lorem ipsum dolor sit amet consectetur. Felis nisl placerat amet dictum cras sed ornare. Amet mauris magna nec ullamcorper sit. Tellus sed pellentesque amet sollicitudin.">
                 <div class="carousel-item-inner">
                     <img src="https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?w=243&h=243&fit=crop" alt="Project 6">
                     <video loop muted playsinline>
@@ -1300,7 +1452,7 @@
                 </div>
             </div>
             <!-- Duplicate set 1 -->
-            <div class="carousel-item" data-index="0" data-title="URBAN JURGENSEN NEW WEBSITE" data-year="2025">
+            <div class="carousel-item" data-index="0" data-title="urban jürgensen website refresh" data-year="2025" data-description="Lorem ipsum dolor sit amet consectetur. Felis nisl placerat amet dictum cras sed ornare. Amet mauris magna nec ullamcorper sit. Tellus sed pellentesque amet sollicitudin.">
                 <div class="carousel-item-inner">
                     <img src="https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?w=243&h=243&fit=crop" alt="Project 1">
                     <video loop muted playsinline>
@@ -1308,7 +1460,7 @@
                     </video>
                 </div>
             </div>
-            <div class="carousel-item" data-index="1" data-title="F.P.JOURNE COLLECTION" data-year="2024">
+            <div class="carousel-item" data-index="1" data-title="f.p.journe collection" data-year="2024" data-description="Lorem ipsum dolor sit amet consectetur. Felis nisl placerat amet dictum cras sed ornare. Amet mauris magna nec ullamcorper sit. Tellus sed pellentesque amet sollicitudin.">
                 <div class="carousel-item-inner">
                     <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=243&h=243&fit=crop" alt="Project 2">
                     <video loop muted playsinline>
@@ -1316,7 +1468,7 @@
                     </video>
                 </div>
             </div>
-            <div class="carousel-item" data-index="2" data-title="ZODIAC HERITAGE" data-year="2024">
+            <div class="carousel-item" data-index="2" data-title="zodiac heritage" data-year="2024" data-description="Lorem ipsum dolor sit amet consectetur. Felis nisl placerat amet dictum cras sed ornare. Amet mauris magna nec ullamcorper sit. Tellus sed pellentesque amet sollicitudin.">
                 <div class="carousel-item-inner">
                     <img src="https://images.unsplash.com/photo-1594534475808-b18fc33b045e?w=243&h=243&fit=crop" alt="Project 3">
                     <video loop muted playsinline>
@@ -1324,7 +1476,7 @@
                     </video>
                 </div>
             </div>
-            <div class="carousel-item" data-index="3" data-title="PARMIGIANI FLEURIER" data-year="2024">
+            <div class="carousel-item" data-index="3" data-title="parmigiani fleurier" data-year="2024" data-description="Lorem ipsum dolor sit amet consectetur. Felis nisl placerat amet dictum cras sed ornare. Amet mauris magna nec ullamcorper sit. Tellus sed pellentesque amet sollicitudin.">
                 <div class="carousel-item-inner">
                     <img src="https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=243&h=243&fit=crop" alt="Project 4">
                     <video loop muted playsinline>
@@ -1332,7 +1484,7 @@
                     </video>
                 </div>
             </div>
-            <div class="carousel-item" data-index="4" data-title="HINE COGNAC" data-year="2023">
+            <div class="carousel-item" data-index="4" data-title="hine cognac" data-year="2023" data-description="Lorem ipsum dolor sit amet consectetur. Felis nisl placerat amet dictum cras sed ornare. Amet mauris magna nec ullamcorper sit. Tellus sed pellentesque amet sollicitudin.">
                 <div class="carousel-item-inner">
                     <img src="https://images.unsplash.com/photo-1560343090-f0409e92791a?w=243&h=243&fit=crop" alt="Project 5">
                     <video loop muted playsinline>
@@ -1340,7 +1492,7 @@
                     </video>
                 </div>
             </div>
-            <div class="carousel-item" data-index="5" data-title="LE GRAND TOUR" data-year="2023">
+            <div class="carousel-item" data-index="5" data-title="le grand tour" data-year="2023" data-description="Lorem ipsum dolor sit amet consectetur. Felis nisl placerat amet dictum cras sed ornare. Amet mauris magna nec ullamcorper sit. Tellus sed pellentesque amet sollicitudin.">
                 <div class="carousel-item-inner">
                     <img src="https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?w=243&h=243&fit=crop" alt="Project 6">
                     <video loop muted playsinline>
@@ -1349,7 +1501,7 @@
                 </div>
             </div>
             <!-- Duplicate set 2 -->
-            <div class="carousel-item" data-index="0" data-title="URBAN JURGENSEN NEW WEBSITE" data-year="2025">
+            <div class="carousel-item" data-index="0" data-title="urban jürgensen website refresh" data-year="2025" data-description="Lorem ipsum dolor sit amet consectetur. Felis nisl placerat amet dictum cras sed ornare. Amet mauris magna nec ullamcorper sit. Tellus sed pellentesque amet sollicitudin.">
                 <div class="carousel-item-inner">
                     <img src="https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?w=243&h=243&fit=crop" alt="Project 1">
                     <video loop muted playsinline>
@@ -1357,7 +1509,7 @@
                     </video>
                 </div>
             </div>
-            <div class="carousel-item" data-index="1" data-title="F.P.JOURNE COLLECTION" data-year="2024">
+            <div class="carousel-item" data-index="1" data-title="f.p.journe collection" data-year="2024" data-description="Lorem ipsum dolor sit amet consectetur. Felis nisl placerat amet dictum cras sed ornare. Amet mauris magna nec ullamcorper sit. Tellus sed pellentesque amet sollicitudin.">
                 <div class="carousel-item-inner">
                     <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=243&h=243&fit=crop" alt="Project 2">
                     <video loop muted playsinline>
@@ -1365,7 +1517,7 @@
                     </video>
                 </div>
             </div>
-            <div class="carousel-item" data-index="2" data-title="ZODIAC HERITAGE" data-year="2024">
+            <div class="carousel-item" data-index="2" data-title="zodiac heritage" data-year="2024" data-description="Lorem ipsum dolor sit amet consectetur. Felis nisl placerat amet dictum cras sed ornare. Amet mauris magna nec ullamcorper sit. Tellus sed pellentesque amet sollicitudin.">
                 <div class="carousel-item-inner">
                     <img src="https://images.unsplash.com/photo-1594534475808-b18fc33b045e?w=243&h=243&fit=crop" alt="Project 3">
                     <video loop muted playsinline>
@@ -1373,7 +1525,7 @@
                     </video>
                 </div>
             </div>
-            <div class="carousel-item" data-index="3" data-title="PARMIGIANI FLEURIER" data-year="2024">
+            <div class="carousel-item" data-index="3" data-title="parmigiani fleurier" data-year="2024" data-description="Lorem ipsum dolor sit amet consectetur. Felis nisl placerat amet dictum cras sed ornare. Amet mauris magna nec ullamcorper sit. Tellus sed pellentesque amet sollicitudin.">
                 <div class="carousel-item-inner">
                     <img src="https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=243&h=243&fit=crop" alt="Project 4">
                     <video loop muted playsinline>
@@ -1381,7 +1533,7 @@
                     </video>
                 </div>
             </div>
-            <div class="carousel-item" data-index="4" data-title="HINE COGNAC" data-year="2023">
+            <div class="carousel-item" data-index="4" data-title="hine cognac" data-year="2023" data-description="Lorem ipsum dolor sit amet consectetur. Felis nisl placerat amet dictum cras sed ornare. Amet mauris magna nec ullamcorper sit. Tellus sed pellentesque amet sollicitudin.">
                 <div class="carousel-item-inner">
                     <img src="https://images.unsplash.com/photo-1560343090-f0409e92791a?w=243&h=243&fit=crop" alt="Project 5">
                     <video loop muted playsinline>
@@ -1389,7 +1541,7 @@
                     </video>
                 </div>
             </div>
-            <div class="carousel-item" data-index="5" data-title="LE GRAND TOUR" data-year="2023">
+            <div class="carousel-item" data-index="5" data-title="le grand tour" data-year="2023" data-description="Lorem ipsum dolor sit amet consectetur. Felis nisl placerat amet dictum cras sed ornare. Amet mauris magna nec ullamcorper sit. Tellus sed pellentesque amet sollicitudin.">
                 <div class="carousel-item-inner">
                     <img src="https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?w=243&h=243&fit=crop" alt="Project 6">
                     <video loop muted playsinline>
@@ -1411,9 +1563,24 @@
         <div class="footer-label">where to find me:</div>
 
         <div class="footer-links">
-            <a href="mailto:hello@lorrydias.com">hello@lorrydias.com</a>
-            <a href="https://linkedin.com/in/diaslorry" target="_blank">linkedin @diaslorry</a>
-            <a href="https://instagram.com/lorrydias" target="_blank">instagram @lorrydias</a>
+            <a href="mailto:hello@lorrydias.com">
+                <span class="rotate-text-inner">
+                    <span>hello@lorrydias.com</span>
+                    <span>hello@lorrydias.com</span>
+                </span>
+            </a>
+            <a href="https://linkedin.com/in/diaslorry" target="_blank">
+                <span class="rotate-text-inner">
+                    <span>linkedin @diaslorry</span>
+                    <span>linkedin @diaslorry</span>
+                </span>
+            </a>
+            <a href="https://instagram.com/lorrydias" target="_blank">
+                <span class="rotate-text-inner">
+                    <span>instagram @lorrydias</span>
+                    <span>instagram @lorrydias</span>
+                </span>
+            </a>
         </div>
 
         <div class="footer-image">
@@ -1448,10 +1615,79 @@
         if (titleLine1) wrapLetters(titleLine1);
         if (titleLine2) wrapLetters(titleLine2);
 
+        // Paragraph reveal animation - subtle word by word
+        function wrapWords(element) {
+            const text = element.textContent;
+            element.textContent = '';
+
+            const words = text.split(' ');
+            words.forEach((word, index) => {
+                const wordSpan = document.createElement('span');
+                wordSpan.className = 'word';
+                wordSpan.textContent = word;
+                wordSpan.style.animationDelay = `${index * 0.02}s`;
+
+                element.appendChild(wordSpan);
+
+                // Add space after each word except the last one
+                if (index < words.length - 1) {
+                    element.appendChild(document.createTextNode(' '));
+                }
+            });
+
+            element.classList.add('animate');
+        }
+
+        // Initialize paragraph animations with Intersection Observer
+        const revealParagraphs = document.querySelectorAll('.reveal-paragraph');
+
+        const paragraphObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.classList.contains('animate')) {
+                    wrapWords(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.2,
+            rootMargin: '0px'
+        });
+
+        revealParagraphs.forEach(paragraph => {
+            paragraphObserver.observe(paragraph);
+        });
+
+        // Three images fade-in animation
+        const threeImages = document.querySelectorAll('.section-2 .gallery-image');
+
+        const threeImagesObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Trigger animations in order with delays
+                    threeImages.forEach((img, index) => {
+                        setTimeout(() => {
+                            img.classList.add('reveal');
+                        }, index * 200); // 200ms delay between each image
+                    });
+                    // Unobserve after triggering
+                    threeImagesObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.2,
+            rootMargin: '0px'
+        });
+
+        // Observe the section-2 container
+        const section2 = document.querySelector('.section-2');
+        if (section2) {
+            threeImagesObserver.observe(section2);
+        }
+
         // Parallax effect - includes three images section and double height section
         const imageContainers = document.querySelectorAll('.gallery-image-large, .gallery-image-full');
         const threeImageBoxes = document.querySelectorAll('.section-2 .gallery-image');
         const doubleHeightImage = document.querySelector('.double-height-section .centered-landscape');
+        const portraitImage = document.querySelector('.section-1 .gallery-image-portrait img');
 
         function updateParallax() {
             const scrollY = window.scrollY;
@@ -1525,6 +1761,25 @@
                     const parallaxOffset = scrollProgress * 100 - 50; // Range from -50px to 50px
 
                     doubleHeightImage.style.transform = `translate(-50%, calc(-50% + ${parallaxOffset}px))`;
+                }
+            }
+
+            // Parallax for section-1 centered portrait image
+            if (portraitImage) {
+                const parent = portraitImage.closest('.section-1');
+                const rect = parent.getBoundingClientRect();
+                const containerTop = rect.top + scrollY;
+                const containerHeight = rect.height;
+
+                // Calculate when container is in viewport
+                const inViewport = rect.top < windowHeight && rect.bottom > 0;
+
+                if (inViewport) {
+                    // Calculate parallax offset
+                    const scrollProgress = (scrollY - containerTop + windowHeight) / (windowHeight + containerHeight);
+                    const parallaxOffset = scrollProgress * 100 - 50; // Range from -50px to 50px
+
+                    portraitImage.style.transform = `translateY(${parallaxOffset}px)`;
                 }
             }
         }
@@ -1618,16 +1873,19 @@
 
         // Carousel item hover label functionality
         const hoverLabel = document.getElementById('carouselHoverLabel');
+        const hoverTitle = hoverLabel.querySelector('.carousel-hover-title');
+        const hoverParagraph = hoverLabel.querySelector('.carousel-hover-paragraph');
         const allCarouselItems = document.querySelectorAll('.carousel-item');
 
         allCarouselItems.forEach(item => {
             item.addEventListener('mouseenter', () => {
                 const title = item.getAttribute('data-title');
-                const year = item.getAttribute('data-year');
+                const description = item.getAttribute('data-description');
 
-                if (title && year) {
-                    // Show hover label with project info on single line
-                    hoverLabel.innerHTML = `${title} ${year}`;
+                if (title && description) {
+                    // Update label content
+                    hoverTitle.textContent = title;
+                    hoverParagraph.textContent = description;
                     hoverLabel.classList.add('visible');
                 }
             });
@@ -1637,6 +1895,142 @@
                 hoverLabel.classList.remove('visible');
             });
         });
+
+        // Red trail effect
+        const fullPageCanvas = document.getElementById('fullPageTrailCanvas');
+
+        if (fullPageCanvas && window.innerWidth >= 768) {
+            fullPageCanvas.style.display = 'block';
+            const ctx = fullPageCanvas.getContext('2d');
+            const trailPoints = [];
+            const maxTrailLength = 40;
+            let isDrawing = false;
+            let mouseX = 0;
+            let mouseY = 0;
+            let velocity = 0;
+
+            // Set canvas size to viewport (since it's fixed position)
+            function resizeCanvas() {
+                fullPageCanvas.width = window.innerWidth;
+                fullPageCanvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            // Mouse events on document
+            document.addEventListener('mouseenter', () => {
+                isDrawing = true;
+            });
+
+            document.addEventListener('mouseleave', () => {
+                isDrawing = false;
+            });
+
+            let lastMouseX = 0;
+            let lastMouseY = 0;
+
+            let currentColor = '#cc2a2a'; // Default red color
+
+            document.addEventListener('mousemove', (e) => {
+                // Check if mouse is over footer
+                const target = e.target;
+                const footerSection = target.closest('.footer-contact');
+
+                // Change color based on section
+                if (footerSection) {
+                    currentColor = '#F5F6F5'; // Light beige for footer
+                } else {
+                    currentColor = '#cc2a2a'; // Red for rest of page
+                }
+
+                // Calculate velocity for dynamic brush width
+                const dx = e.clientX - lastMouseX;
+                const dy = e.clientY - lastMouseY;
+                velocity = Math.sqrt(dx * dx + dy * dy);
+
+                lastMouseX = e.clientX;
+                lastMouseY = e.clientY;
+
+                // For fixed position canvas, use clientX/Y directly (no scroll offset needed)
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+
+                if (!isDrawing) {
+                    isDrawing = true;
+                }
+            });
+
+            // Smooth interpolation function
+            function lerp(start, end, factor) {
+                return start + (end - start) * factor;
+            }
+
+            // Animation loop with brush effect
+            function animate() {
+                ctx.clearRect(0, 0, fullPageCanvas.width, fullPageCanvas.height);
+
+                if (isDrawing) {
+                    if (trailPoints.length === 0) {
+                        trailPoints.push({ x: mouseX, y: mouseY, velocity: velocity });
+                    } else {
+                        trailPoints.push({ x: mouseX, y: mouseY, velocity: velocity });
+
+                        for (let i = 0; i < trailPoints.length - 1; i++) {
+                            const point = trailPoints[i];
+                            const nextPoint = trailPoints[i + 1];
+                            point.x = lerp(point.x, nextPoint.x, 0.3);
+                            point.y = lerp(point.y, nextPoint.y, 0.3);
+                        }
+
+                        if (trailPoints.length > maxTrailLength) {
+                            trailPoints.shift();
+                        }
+                    }
+
+                    // Draw brush strokes with varying thickness
+                    if (trailPoints.length > 2) {
+                        for (let i = 0; i < trailPoints.length - 1; i++) {
+                            const point = trailPoints[i];
+                            const nextPoint = trailPoints[i + 1];
+
+                            // Calculate progress for fade effect
+                            const progress = i / trailPoints.length;
+
+                            // Dynamic brush width based on velocity and position
+                            const baseWidth = 8;
+                            const velocityFactor = Math.max(0.4, 1 - point.velocity / 30);
+                            const brushWidth = baseWidth * velocityFactor * (0.5 + progress * 0.5);
+
+                            // Add organic variation
+                            const noise = Math.sin(i * 0.5) * 0.4 + 1;
+                            const finalWidth = brushWidth * noise;
+
+                            // Draw segment with gradient opacity for brush feel
+                            ctx.beginPath();
+                            ctx.moveTo(point.x, point.y);
+                            ctx.lineTo(nextPoint.x, nextPoint.y);
+
+                            ctx.strokeStyle = currentColor;
+                            ctx.lineWidth = finalWidth;
+                            ctx.lineCap = 'round';
+                            ctx.lineJoin = 'round';
+                            ctx.globalAlpha = 0.85 * progress;
+
+                            ctx.stroke();
+                        }
+
+                        ctx.globalAlpha = 1;
+                    }
+                } else {
+                    if (trailPoints.length > 0) {
+                        trailPoints.shift();
+                    }
+                }
+
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
     </script>
 </body>
 </html>
